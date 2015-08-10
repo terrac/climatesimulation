@@ -69,7 +69,7 @@ function updateHeat(body,colorFilter){
        */
 
       var demo = new CANNON.Demo();
-
+ 
       demo.addScene("Moon",function(){
           world = demo.getWorld();
           world.solver.iterations = 1;
