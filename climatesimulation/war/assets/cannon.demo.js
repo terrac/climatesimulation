@@ -275,7 +275,7 @@ CANNON.Demo = function(options){
         if(settings.contacts){
             // if ci is even - use body i, else j
             for(var ci=0; ci < world.contacts.length; ci++){
-                for(var ij=0; ij < 2; ij++){
+                for(var ijf=0; ij < 2; ij++){
                     var  mesh = contactMeshCache.request(),
                     c = world.contacts[ci],
                     b = ij===0 ? c.bi : c.bj,
@@ -453,7 +453,7 @@ CANNON.Demo = function(options){
         camera = new THREE.PerspectiveCamera( 24, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
 
         camera.up.set(0,0,1);
-        camera.position.set(0,30,20);
+        camera.position.set(0,5,30);
 
         // SCENE
         scene = that.scene = new THREE.Scene();
@@ -464,12 +464,12 @@ CANNON.Demo = function(options){
         scene.add( ambient );
 
         light = new THREE.SpotLight( 0xffffff );
-        light.position.set( 0, 30, 0 );
+        light.position.set( 0, 0, 30 );
         light.target.position.set( 0, 0, 0 );
         scene.add( light );
         
         light = new THREE.SpotLight( 0xffffff );
-        light.position.set( 0, -30, 0 );
+        light.position.set( 0, 0, -30 );
         light.target.position.set( 0, 0, 0 );
         scene.add( light );
         
