@@ -1,10 +1,8 @@
 redFilter = 0x030000;
 greenFilter = 0x000300;
-blueFilter = 0x000003;
 
-function updateHeat(body){
+function updateHeat(body,colorFilter){
 	if(body.heat === undefined) return;
-	colorFilter = body.colorFilter;
 	demo.visuals[demo.bodies.indexOf(body)].children[0].material.color.setHex(0x110000+Math.floor(body.heat)*colorFilter)	
 }
 
@@ -52,7 +50,7 @@ function updateHeat(body){
             // Fore is pointing in the moon-planet direction
             moon_to_planet.normalize();
             moon_to_planet.mult(1500/Math.pow(distance,2),this.force);
-            updateHeat(this);
+            updateHeat(this,redFilter);
         }
         
 
@@ -60,7 +58,7 @@ function updateHeat(body){
 
         
 		emissions =function(){
-            updateHeat(this);
+            updateHeat(this,greenFilter);
         }
         
         redMat = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
@@ -71,7 +69,7 @@ function updateHeat(body){
        */
 
       var demo = new CANNON.Demo();
- 
+
       demo.addScene("Moon",function(){
           world = demo.getWorld();
           world.solver.iterations = 1;
@@ -121,7 +119,6 @@ function updateHeat(body){
         }
         
         
-        var atmosphereA = [];
         planet.addEventListener("collide",heatDistribute);
         interval = setInterval(function(){
         	currentAtmosphere++;
@@ -129,7 +126,6 @@ function updateHeat(body){
         		return;
         	}
         	var moon = new CANNON.Body({ mass: mass });
-        	moon.colorFilter = Math.random() > .7 ? greenFilter : blueFilter;
         	moon.heat = 1;
         	moon.heatDistribute = true;
           	moon.addShape(atmosphereShape);
@@ -149,7 +145,6 @@ function updateHeat(body){
             moon.sleepTimeLimit = 1;
 	      	world.add(moon);
           	demo.addVisual(moon,new THREE.MeshLambertMaterial( { color: 0x777777 } ));
-          	atmosphereA.push(moon);
         },mPerAtmosphere);
           
           // We add the objects to the world to simulate them
@@ -175,10 +170,10 @@ function updateHeat(body){
         	moon.position.set(Math.random() +lightBase.position.x,Math.random() +lightBase.position.y,Math.random() +lightBase.position.z);
           	//moon.velocity.set(0,0,8);
 	        //moon.velocity.set(-8,0,0);
-	        
+	        moon.lastYVelocity = 0;
 	        //moon.linearDamping = 0.0;
 	        
-            
+
 
             
 	      	world.add(moon);
@@ -186,12 +181,6 @@ function updateHeat(body){
           	demo.addVisual(moon,new THREE.MeshLambertMaterial( { color: 0xffff00 } ));
           	bodies.push(moon)
           	
-          	var moon_to_planet = new CANNON.Vec3();
-            moon.position.negate(moon_to_planet);
-            var distance = moon_to_planet.norm();
-            moon_to_planet.normalize();
-            moon_to_planet.mult(1500/Math.pow(distance,2),moon.velocity);
-            
           	if(bodies.length>100){
                 var b = bodies.shift();
                 demo.removeVisual(b);
@@ -237,7 +226,7 @@ function updateHeat(body){
           	//moon.position.set(Math.random() * 30,Math.random() * 8-4,Math.random() * 8-4);
           	moon.position.set(Math.random() * 6 -3 ,Math.random() * 6-3,Math.random() * 6-3);
           	
-          	moon.colorFilter = redFilter;
+          	
           	moon.addEventListener("collide",heatDistributeEmissions);
           	//moon.velocity.set(0,0,8);
 	        //moon.velocity.set(1,0,0);
@@ -259,35 +248,3 @@ function updateHeat(body){
         });
 
       demo.start();
-      
-      interval = setInterval(function(){
-    	dataPos = {}  
-      	for(a in atmosphereA){
-      		var ypos =a.position.y;
-      		ypos = Math.floor(ypos);
-      		dataPos
-      	}
-     	 var moon = new CANNON.Body({ mass: lightMass });
-     	moon.heat = 1;
-     	moon.heatDistribute = true;
-       	moon.addShape(heatShape);
-       	//moon.position.set(Math.random() * 30,Math.random() * 10-4,Math.random() * 10-4);
-       	//moon.position.set(Math.random() * 30,Math.random() * 8-4,Math.random() * 8-4);
-       	moon.position.set(Math.random() * 6 -3 ,Math.random() * 6-3,Math.random() * 6-3);
-       	
-       	moon.colorFilter = redFilter;
-       	moon.addEventListener("collide",heatDistributeEmissions);
-       	//moon.velocity.set(0,0,8);
-	        //moon.velocity.set(1,0,0);
-	        //moon.linearDamping = 0.0;
-       	moon.preStep = emissions;
-	      	world.add(moon);
-	      	
-       	demo.addVisual(moon,new THREE.MeshLambertMaterial( { color: 0x000000 } ));
-       	hDA.push(moon)
-       	if(hDA.length > totalHeat){          		
-       		var b = hDA.shift();
-             demo.removeVisual(b);
-             world.remove(b);
-       	}
-     },10 * 1000);      

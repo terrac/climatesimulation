@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>cannon.js - callbacks demo</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  </head>
+  <body>
+    <script src="assets/cannon.js"></script>
+    <script src="assets/Three.js"></script>
+    <script src="assets/Detector.js"></script>
+    <script>
+
+
+var world;
+        var dt = 1 / 60;
+
+        var constraintDown = false;
+        var camera, scene, renderer, gplane=false, clickMarker=false;
+        var geometry, material, mesh;
+        var controls,time = Date.now();
+
+        var jointBody, constrainedBody, mouseConstraint;
+
+        var N = 1;
+
+        var container, camera, scene, renderer, projector;
+
+        // To be synced
+        var meshes=[], bodies=[];
+
+        // Initialize Three.js
+        if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+        initCannon();
+        init();
+        animate();
+
+        function init() {
+
+            projector = new THREE.Projector();
+
+            container = document.createElement( 'div' );
+            document.body.appendChild( container );
+
+            // scene
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog( 0x000000, 500, 10000 );
+
+            // camera
+            camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.5, 10000 );
+            camera.position.set(10, 2, 0);
+            camera.quaternion.setFromAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
+            scene.add(camera);
+
+            // lights
+            var light, materials;
+            scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+            light = new THREE.DirectionalLight( 0xffffff, 1.75 );
+            var d = 20;
+
+            light.position.set( d, d, d );
+
+            light.castShadow = true;
+            //light.shadowCameraVisible = true;
+
+            light.shadowMapWidth = 1024;
+            light.shadowMapHeight = 1024;
+
+            light.shadowCameraLeft = -d;
+            light.shadowCameraRight = d;
+            light.shadowCameraTop = d;
+            light.shadowCameraBottom = -d;
+
+            light.shadowCameraFar = 3*d;
+            light.shadowCameraNear = d;
+            light.shadowDarkness = 0.5;
+
+            scene.add( light );
+
+
+        }
+
+
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            //controls.handleResize();
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        }
+
+        function animate() {
+            requestAnimationFrame( animate );
+            //controls.update();
+            updatePhysics();
+            render();
+        }
+
+        function updatePhysics(){
+            world.step(dt);
+            for(var i=0; i !== meshes.length; i++){
+                meshes[i].position.copy(bodies[i].position);
+                meshes[i].quaternion.copy(bodies[i].quaternion);
+            }
+        }
+
+        function render() {
+            renderer.render(scene, camera);
+        }
+
+
+
+
+		// Use the preStep callback to apply the gravity force on the moon.
+          // This callback is evoked each timestep.
+		gravity =function(){
+
+            // Get the vector pointing from the moon to the planet center
+            var moon_to_planet = new CANNON.Vec3();
+            this.position.negate(moon_to_planet);
+
+            // Get distance from planet to moon
+            var distance = moon_to_planet.norm();
+
+            // Now apply force on moon
+            // Fore is pointing in the moon-planet direction
+            moon_to_planet.normalize();
+            moon_to_planet.mult(1500/Math.pow(distance,2),this.force);
+
+        }
+        
+        redMat = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
+
+      function initCannon(){
+
+          var world = new CANNON.World();
+
+          var mass = 5;
+          var moonShape = new CANNON.Sphere(0.05);
+          var planetShape = new CANNON.Sphere(3.5);
+          
+          var planet = new CANNON.Body({ mass: 0 });
+          planet.addShape(planetShape);
+
+          
+
+		for(a = 0 ; a < 300 ; a++){
+        	var moon = new CANNON.Body({ mass: mass });
+          	moon.addShape(moonShape);
+          	//moon.position.set(Math.random() * 30,Math.random() * 10-4,Math.random() * 10-4);
+          	//moon.position.set(Math.random() * 30,Math.random() * 8-4,Math.random() * 8-4);
+          	moon.position.set(Math.random() * -5,Math.random() * 6-3,Math.random() * 6-3);
+          	//moon.velocity.set(0,0,8);
+	        moon.velocity.set(1,0,0);
+	        //moon.linearDamping = 0.0;
+	        moon.preStep = gravity
+	      	world.add(moon);
+          	demo.addVisual(moon);
+        }
+          
+          // We add the objects to the world to simulate them
+          
+          world.add(planet);
+
+          // And we add them to the demo to make them visible
+          
+          demo.addVisual(planet);
+          
+          
+                  var bodies = [];
+        var i = 0;
+        interval = setInterval(function(){
+        	var moon = new CANNON.Body({ mass: mass },redMat);        	
+          	moon.addShape(moonShape);
+          	//moon.position.set(Math.random() * 30,Math.random() * 10-4,Math.random() * 10-4);
+          	//moon.position.set(Math.random() * 30,Math.random() * 8-4,Math.random() * 8-4);
+          	moon.position.set(Math.random() * 30,Math.random() * 6-3,Math.random() * 6-3);
+          	//moon.velocity.set(0,0,8);
+	        moon.velocity.set(-8,0,0);
+	        //moon.linearDamping = 0.0;
+	        
+	      	world.add(moon);
+          	demo.addVisual(moon);
+          	bodies.push(moon)
+          	
+          	if(bodies.length>100){
+                var b = bodies.shift();
+                demo.removeVisual(b);
+                world.remove(b);
+            }
+
+        },30);
+        }
+
+      demo.start();
+
+    </script>
+  </body>
+</html>
