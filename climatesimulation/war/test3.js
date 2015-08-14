@@ -121,7 +121,7 @@ function updateHeat(body){
         }
         
         
-        var atmosphereA = [];
+        atmosphereA = [];
         planet.addEventListener("collide",heatDistribute);
         interval = setInterval(function(){
         	currentAtmosphere++;
@@ -130,6 +130,7 @@ function updateHeat(body){
         	}
         	var moon = new CANNON.Body({ mass: mass });
         	moon.colorFilter = Math.random() > .7 ? greenFilter : blueFilter;
+        	
         	moon.heat = 1;
         	moon.heatDistribute = true;
           	moon.addShape(atmosphereShape);
@@ -227,7 +228,7 @@ function updateHeat(body){
         },mPerLight);
         
         hDA = []
-        interval = setInterval(function(){
+        setTimeout(function(){
         	
         	 var moon = new CANNON.Body({ mass: lightMass });
         	moon.heat = 1;
@@ -252,6 +253,7 @@ function updateHeat(body){
                 demo.removeVisual(b);
                 world.remove(b);
           	}
+          	setTimeout(this,mPerHeat)
         },mPerHeat);
 
 
@@ -259,35 +261,38 @@ function updateHeat(body){
         });
 
       demo.start();
-      
+      differenceA = []
       interval = setInterval(function(){
     	dataPos = {}  
       	for(a in atmosphereA){
-      		var ypos =a.position.y;
-      		ypos = Math.floor(ypos);
-      		dataPos
+      		var ypos =atmosphereA[a].position.y;
+      		ypos = Math.round(ypos);
+      		if(dataPos[ypos] === undefined)
+      			dataPos[ypos] = []
+      		dataPos[ypos].push(atmosphereA[a].heat)
       	}
-     	 var moon = new CANNON.Body({ mass: lightMass });
-     	moon.heat = 1;
-     	moon.heatDistribute = true;
-       	moon.addShape(heatShape);
-       	//moon.position.set(Math.random() * 30,Math.random() * 10-4,Math.random() * 10-4);
-       	//moon.position.set(Math.random() * 30,Math.random() * 8-4,Math.random() * 8-4);
-       	moon.position.set(Math.random() * 6 -3 ,Math.random() * 6-3,Math.random() * 6-3);
-       	
-       	moon.colorFilter = redFilter;
-       	moon.addEventListener("collide",heatDistributeEmissions);
-       	//moon.velocity.set(0,0,8);
-	        //moon.velocity.set(1,0,0);
-	        //moon.linearDamping = 0.0;
-       	moon.preStep = emissions;
-	      	world.add(moon);
-	      	
-       	demo.addVisual(moon,new THREE.MeshLambertMaterial( { color: 0x000000 } ));
-       	hDA.push(moon)
-       	if(hDA.length > totalHeat){          		
-       		var b = hDA.shift();
-             demo.removeVisual(b);
-             world.remove(b);
-       	}
+      	dataAvg = {}
+      	for(a in dataPos){
+      		var avg = 0;
+      		for(b in dataPos[a]){
+      			avg+=dataPos[a][b]
+      		}
+      		avg = avg/dataPos[a].length
+      		dataAvg[a]= avg
+      	}
+      	var lowestAmount = 9999999;
+      	var highestAmount = 0;
+      	for(a in dataAvg){
+      		var b = dataAvg[a];
+      		if(b > highestAmount)
+      			highestAmount = b
+      		if(b < lowestAmount)
+      			lowestAmount = b
+      			
+      	}
+      	mPerHeat += 30
+    	myBarChart.addData([highestAmount,highestAmount - lowestAmount],mPerHeat)
+    	// Would update the first dataset's value of 'March' to be 50
+    	//myBarChart.update();
+     	
      },10 * 1000);      

@@ -1,3 +1,16 @@
+1 reduce emissions
+  save example
+2 add in spheres that are invisible (ie air)
+3 land/water has higher mass
+4 light passes through invisible, but heat can get trapped
+5 give different light to heat values for land/air/poles
+6 poles are just land values with a low enough score to turn white
+  they then have a lower light to heat value
+
+
+
+
+
 1 finish the first chart
    (save current example
   #a add green and blue balls
