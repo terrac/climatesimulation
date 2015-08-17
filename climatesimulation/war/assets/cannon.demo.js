@@ -942,6 +942,15 @@ CANNON.Demo.prototype.addVisual = function(body,material){
     }
 };
 
+CANNON.Demo.prototype.removePartialVisuals = function(pct){
+	for(idx in this.bodies){
+		var b = this.bodies[idx];
+		if(Math.random() > pct){
+			this.removeVisual(b);
+		} 
+	}
+};
+
 CANNON.Demo.prototype.addVisuals = function(bodies){
     for (var i = 0; i < bodies.length; i++) {
         this.addVisual(bodies[i]);
