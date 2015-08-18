@@ -1,4 +1,40 @@
-1 reduce emissions
+1 17 fps is fine when you aren't going for speed (ie slow down steps essentially to deal with slowness)
+2
+
+
+1 %visibility (basically to test speed issues)
+2
+
+
+
+
+
+
+
+
+
+
+
+
+1 test sap broadphase
+
+
+
+1 save example
+2 object oriented framework for climate change simulation
+  a conductivity
+  b visibility (on/off)
+  c filter group (view-source:http://schteppe.github.io/cannon.js/demos/collisionFilter.html)
+  d density (ie mass) probably wont be that useful
+  e layer (create equally all around in different layers)
+  f light (chance of changing to heat)
+  g colors
+  h reflectivity  
+  i change in color based on heat
+  j axial tilt
+  k sleepiness
+  l size
+reduce emissions
   save example
 2 add in spheres that are invisible (ie air)
 3 land/water has higher mass
