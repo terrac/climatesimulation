@@ -136,7 +136,7 @@ addType("atmosphere", {
 	"gravity" : true,
 	"visibility" : true,
 	"color" : 0xFFFFFF,
-	"opacity" : .5,
+	"opacity" : .1,
 	"shape" : smallShape,
 	"mass" : 5,
 	"sleepSpeed" : .1,
