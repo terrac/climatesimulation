@@ -14,8 +14,8 @@ mPerLight = 30
 lightMass = .00001
 
 randomAllOver = function(shape) {
-	currentBody.position.set(Math.random() * 6 - 3, Math.random() * 6 - 3, Math
-			.random() * 6 - 3);
+	currentBody.position.set(Math.random() * shape * 2 - shape, Math.random() * shape * 2 - shape, Math
+			.random() * shape * 2 - shape);
 }
 randomNone = function() {
 }
