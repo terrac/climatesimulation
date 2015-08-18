@@ -56,7 +56,9 @@ function useType(args) {
 	world.add(obj);
 	if (args.visibility)
 		demo.addVisual(obj, new THREE.MeshLambertMaterial({
-			color : args.color
+			color : args.color,
+			transparent : (args.opacity !== undefined),
+			opacity : args.opacity
 		}));
 	currentBody = obj;
 }
@@ -95,7 +97,7 @@ addType("planet", {
 	"visibility" : true,
 	"color" : 0x49311C,
 	"shape" : planetShape,
-	"mass" : 500000,
+	"mass" : 0,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
 })
@@ -132,10 +134,11 @@ addType("ocean", {
 
 addType("atmosphere", {
 	"gravity" : true,
-	"visibility" : false,
-	"color" : null,
+	"visibility" : true,
+	"color" : 0xFFFFFF,
+	"opacity" : .5,
 	"shape" : smallShape,
-	"mass" : 5,
+	"mass" : .01,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
 })
@@ -200,7 +203,7 @@ addLayer({
 	"amount" : 600,
 	"random" : randomAllOver,
 	"params" : {
-		"shape" : 3
+		"shape" : 5
 	}
 })
 
