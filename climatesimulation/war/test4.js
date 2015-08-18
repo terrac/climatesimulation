@@ -200,7 +200,7 @@ addLayer({
 	"type" : "atmosphere",
 	"start" : 2000,
 	"timeBetween" : 30,
-	"amount" : 600,
+	"amount" : 200,
 	"random" : randomAllOver,
 	"params" : {
 		"shape" : 5
