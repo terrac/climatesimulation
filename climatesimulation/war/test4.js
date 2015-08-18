@@ -198,7 +198,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 200,
 	"random" : randomAllOver,
-	"params" : [3]
+	"params" : [7]
 })
 
 addLayer({
@@ -207,7 +207,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 10,
 	"random" : randomAllOver,
-	"params" : [3]
+	"params" : [8]
 })
 var demo = new CANNON.Demo();
 
