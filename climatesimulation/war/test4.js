@@ -54,6 +54,8 @@ function useType(args) {
 	obj.sleepTimeLimit = args.sleepTimeLimit; // Body falls asleep after 1s of
 	// sleepiness
 	world.add(obj);
+	if(args.opacity === undefined)
+		args.opacity = 1
 	if (args.visibility)
 		demo.addVisual(obj, new THREE.MeshLambertMaterial({
 			color : args.color,
@@ -73,7 +75,7 @@ layerRun = function(args, amount) {
 	}
 	amount++;
 	useType(types[args.type])
-	args.random(args.params)
+	args.random.apply(this,args.params)
 	if (amount < args.amount)
 		setTimeout(this.layerRun.bind(this, args, amount), args.timeBetween)
 
@@ -170,9 +172,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 10,
 	"random" : randomAllOver,
-	"params" : {
-		"shape" : 3
-	}
+	"params" : [3]
 })
 
 addLayer({
@@ -181,9 +181,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 30,
 	"random" : randomAllOver,
-	"params" : {
-		"shape" : 3
-	}
+	"params" : [3]
 })
 
 addLayer({
@@ -192,9 +190,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 50,
 	"random" : randomAllOver,
-	"params" : {
-		"shape" : 3
-	}
+	"params" : [3]
 })
 addLayer({
 	"type" : "atmosphere",
@@ -202,9 +198,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 200,
 	"random" : randomAllOver,
-	"params" : {
-		"shape" : 5
-	}
+	"params" : [3]
 })
 
 addLayer({
@@ -213,9 +207,7 @@ addLayer({
 	"timeBetween" : 30,
 	"amount" : 10,
 	"random" : randomAllOver,
-	"params" : {
-		"shape" : 3
-	}
+	"params" : [3]
 })
 var demo = new CANNON.Demo();
 
