@@ -138,7 +138,7 @@ addType("atmosphere", {
 	"color" : 0xFFFFFF,
 	"opacity" : .5,
 	"shape" : smallShape,
-	"mass" : .01,
+	"mass" : 5,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
 })
