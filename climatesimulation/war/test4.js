@@ -32,7 +32,25 @@ gravity = function() {
 	// Now apply force on moon
 	// Fore is pointing in the moon-planet direction
 	moon_to_planet.normalize();
-	moon_to_planet.mult(15000 / Math.pow(distance, 2), this.force);
+	//moon_to_planet.mult(1500 / Math.pow(distance, 2), this.force);
+	moon_to_planet.mult(1, this.force);
+
+}
+
+gravityHeavy = function() {
+
+	// Get the vector pointing from the moon to the planet center
+	var moon_to_planet = new CANNON.Vec3();
+	this.position.negate(moon_to_planet);
+
+	// Get distance from planet to moon
+	var distance = moon_to_planet.norm();
+
+	// Now apply force on moon
+	// Fore is pointing in the moon-planet direction
+	moon_to_planet.normalize();
+	//moon_to_planet.mult(1500 / Math.pow(distance, 2), this.force);
+	moon_to_planet.mult(10, this.force);
 
 }
 
@@ -46,8 +64,10 @@ function useType(args) {
 		mass : args.mass
 	});
 	obj.addShape(args.shape);
-	if (args.gravity === undefined || args.gravity)
+	if (args.gravity === undefined)
 		obj.preStep = gravity
+	else
+		obj.preStep = args.gravity
 	obj.allowSleep = true;
 	obj.sleepSpeedLimit = args.sleepSpeed;// Body will feel sleepy if speed<1
 	// (speed == norm of velocity)
@@ -90,12 +110,13 @@ function useLayer() {
 
 var atmosphereShape = new CANNON.Sphere(1);
 var smallShape = new CANNON.Sphere(0.4);
+var smallerShape = new CANNON.Sphere(0.2);
 var lightShape = new CANNON.Sphere(0.05);
 var planetShape = new CANNON.Sphere(1.5);
 var particleShape = new CANNON.Particle();
 
 addType("planet", {
-	"gravity" : false,
+	"gravity" : null,
 	"visibility" : true,
 	"color" : 0x49311C,
 	"shape" : planetShape,
@@ -105,7 +126,7 @@ addType("planet", {
 })
 
 addType("dirt", {
-	"gravity" : true,
+	"gravity" : gravityHeavy,
 	"visibility" : true,
 	"color" : 0x49311C,
 	"shape" : smallShape,
@@ -115,7 +136,7 @@ addType("dirt", {
 })
 
 addType("greenery", {
-	"gravity" : true,
+	"gravity" : gravityHeavy,
 	"visibility" : true,
 	"color" : 0x00FF00,
 	"shape" : smallShape,
@@ -125,28 +146,28 @@ addType("greenery", {
 })
 
 addType("ocean", {
-	"gravity" : true,
+	"gravity" : gravityHeavy,
 	"visibility" : true,
 	"color" : 0x0000FF,
-	"shape" : smallShape,
+	"shape" : smallerShape,
 	"mass" : 5,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
 })
 
 addType("atmosphere", {
-	"gravity" : true,
+	"gravity" : gravity,
 	"visibility" : true,
 	"color" : 0xFFFFFF,
 	"opacity" : .1,
 	"shape" : smallShape,
-	"mass" : 5,
+	"mass" : 1,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
 })
 
 addType("clouds", {
-	"gravity" : true,
+	"gravity" : gravity,
 	"visibility" : true,
 	"color" : 0xFFFFFF,
 	"shape" : smallShape,
@@ -188,13 +209,14 @@ addLayer({
 	"type" : "ocean",
 	"start" : 600,
 	"timeBetween" : 30,
-	"amount" : 50,
+	"amount" : 80,
 	"random" : randomAllOver,
 	"params" : [3]
+
 })
 addLayer({
 	"type" : "atmosphere",
-	"start" : 2000,
+	"start" : 4000,
 	"timeBetween" : 30,
 	"amount" : 200,
 	"random" : randomAllOver,
