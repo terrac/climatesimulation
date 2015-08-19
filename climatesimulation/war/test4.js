@@ -108,9 +108,9 @@ function useLayer() {
 
 }
 
-var atmosphereShape = new CANNON.Sphere(1);
-var smallShape = new CANNON.Sphere(0.4);
-var smallerShape = new CANNON.Sphere(0.2);
+var atmosphereShape = new CANNON.Sphere(.4);
+var smallShape = new CANNON.Sphere(0.2);
+var smallerShape = new CANNON.Sphere(0.15);
 var lightShape = new CANNON.Sphere(0.05);
 var planetShape = new CANNON.Sphere(1.5);
 var particleShape = new CANNON.Particle();
@@ -159,8 +159,8 @@ addType("atmosphere", {
 	"gravity" : gravity,
 	"visibility" : true,
 	"color" : 0xFFFFFF,
-	"opacity" : .1,
-	"shape" : smallShape,
+	"opacity" : .01,
+	"shape" : atmosphereShape,
 	"mass" : 1,
 	"sleepSpeed" : .1,
 	"sleepTimeLimit" : 1
@@ -200,7 +200,7 @@ addLayer({
 	"type" : "greenery",
 	"start" : 200,
 	"timeBetween" : 30,
-	"amount" : 30,
+	"amount" : 90,
 	"random" : randomAllOver,
 	"params" : [3]
 })
@@ -209,7 +209,7 @@ addLayer({
 	"type" : "ocean",
 	"start" : 600,
 	"timeBetween" : 30,
-	"amount" : 80,
+	"amount" : 180,
 	"random" : randomAllOver,
 	"params" : [3]
 
