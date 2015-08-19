@@ -10,7 +10,7 @@ setInterval(function() {
 
 
 var useLight = true;
-mPerLight = 30
+mPerLight = 90
 lightMass = .00001
 
 randomAllOver = function(shape) {
@@ -18,6 +18,23 @@ randomAllOver = function(shape) {
 			.random() * shape * 2 - shape);
 }
 randomNone = function() {
+}
+
+
+gravityBasic = function() {
+
+	// Get the vector pointing from the moon to the planet center
+	var moon_to_planet = new CANNON.Vec3();
+	this.position.negate(moon_to_planet);
+
+	// Get distance from planet to moon
+	var distance = moon_to_planet.norm();
+
+	// Now apply force on moon
+	// Fore is pointing in the moon-planet direction
+	moon_to_planet.normalize();
+	moon_to_planet.mult(1500 / Math.pow(distance, 2), this.force);
+
 }
 
 gravity = function() {
@@ -250,10 +267,10 @@ demo.addScene("Moon", function() {
 	lightBase.velocity.set(0, 0, 8);
 	// lightBase.velocity.set(0,0,4);
 	lightBase.linearDamping = 0.0;
-	lightBase.preStep = gravity
+	lightBase.preStep = gravityBasic
 	world.add(lightBase);
 	demo.addVisual(lightBase, new THREE.MeshLambertMaterial({
-		color : "0xFFFF00"
+		color : 0xFFFF00
 	}));
 	useLayer();
 	bodies = []
