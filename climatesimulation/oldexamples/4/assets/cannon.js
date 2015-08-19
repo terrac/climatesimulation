@@ -12892,7 +12892,7 @@ function World(){
      * @property defaultContactMaterial
      * @type {ContactMaterial}
      */
-    this.defaultContactMaterial = new ContactMaterial(this.defaultMaterial, this.defaultMaterial, { friction: 0.3, restitution: 0.0 });
+    this.defaultContactMaterial = new ContactMaterial(this.defaultMaterial, this.defaultMaterial, { friction: 1, restitution: 0.0 });
 
     /**
      * @property doProfiling

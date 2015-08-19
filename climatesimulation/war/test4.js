@@ -17,6 +17,23 @@ randomAllOver = function(shape) {
 	currentBody.position.set(Math.random() * 5, Math.random() * 6 - 3, Math
 			.random() * 6 - 3);
 }
+picturePosition = function(color,range) {
+	var img = $('#earth')[0];
+	var canvas = $('#earthCanvas')[0];
+	canvas.width = img.width;
+	canvas.height = img.height;
+	canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+	
+	for(a = 0; a < width; a++){
+		for(b = 0; b < height; b++){
+			var pixelData = canvas.getContext('2d').getImageData(a, b, 1, 1).data;
+		}
+	}
+	x = sin((v + .5) * 3.14)
+	y = sin((u - .5) * 3.14)
+	z = sin((u - .5) * 3.14)
+}
+
 randomNone = function() {
 }
 
