@@ -61,6 +61,11 @@ randomAllOver = function(shape) {
 	currentBody.position.set(Math.random() * shape * 2 - shape, Math.random() * shape * 2 - shape, Math
 			.random() * shape * 2 - shape);
 }
+randomPoles = function(shape) {
+	currentBody.position.set(Math.random() * shape, Math.random()> .5? 5: -5, Math
+			.random() * shape);
+}
+
 picturePosition = function(color,range) {
 	var img = $('#earth')[0];
 	var canvas = $('#earthCanvas')[0];
@@ -287,7 +292,7 @@ addLayer({
 	"type" : "dirt",
 	"start" : 30,
 	"timeBetween" : 30,
-	"amount" : 10,
+	"amount" : 1,
 	"random" : randomAllOver,
 	"params" : [3]
 })
@@ -305,7 +310,7 @@ addLayer({
 	"type" : "ocean",
 	"start" : 600,
 	"timeBetween" : 30,
-	"amount" : 180,
+	"amount" : 300,
 	"random" : randomAllOver,
 	"params" : [7]
 
@@ -333,8 +338,8 @@ addLayer({
 	"start" : 10000,
 	"timeBetween" : 30,
 	"amount" : 10,
-	"random" : randomAllOver,
-	"params" : [18]
+	"random" : randomPoles,
+	"params" : [3]
 })
 var demo = new CANNON.Demo();
 
