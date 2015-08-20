@@ -1,15 +1,57 @@
 //world.broadphase = new CANNON.SAPBroadphase();
 //world.broadphase = new CANNON.GridBroadphase();
 
+function hideHeat(){
+	for(idx in basicBodies){
+		var vis=getVisual(basicBodies[idx])
+		vis.material= basicBodies[idx].originalMaterial
+	}
+}
+
 setInterval(function() {
 	demo.settings.stepFrequency = 120
 }, 1)
 setInterval(function() {
 	demo.settings.stepFrequency = 160
-}, 1)
+}, 30)
+
+setInterval(function() {
+	distributeHeat = true;
+	for(idx in basicBodies){
+
+		basicBodies[idx].addEventListener("collide", function(e) {
+			if(!distributeHeat)
+				return;
+			var b1=e.contact.bi;
+			var b2 = e.contact.bj;
+			if(b1 === undefined||b2 === undefined||b1.cli === undefined || b2.cli === undefined)
+				return;
+			
+			
+			var newHeat = (b1.cli.heat + b2.cli.heat) * .5
+			b1.cli.heat = newHeat;
+			b2.cli.heat = newHeat;
+			
+			var vis = demo.getVisual(b1);
+			var vis2 = demo.getVisual(b2);
+			
+			if(showHeat){
+				var colorFilter = 0x030000;
+				vis.material.color.setHex(0x110000+Math.floor(b1.heat)*colorFilter)	
+				vis2.material.color.setHex(0x110000+Math.floor(b2.heat)*colorFilter)	
+
+			}
+			
+
+		});
+
+	}
+}, 30000)
 
 
 var useLight = true;
+var showHeat = true;
+var distributeheat = false
 mPerLight = 90
 lightMass = .00001
 
@@ -76,10 +118,15 @@ function addType(type, obj) {
 	types[type] = obj
 }
 
+basicBodies = []
 function useType(args) {
 	var obj = new CANNON.Body({
 		mass : args.mass
 	});
+	basicBodies.push(obj);
+		
+	
+	
 	obj.addShape(args.shape);
 	if (args.gravity === undefined)
 		obj.preStep = gravity
@@ -99,6 +146,7 @@ function useType(args) {
 			transparent : (args.opacity !== undefined),
 			opacity : args.opacity
 		}));
+	obj.cli = {}
 	currentBody = obj;
 }
 layers = []
@@ -169,7 +217,7 @@ addType("ocean", {
 	"shape" : smallerShape,
 	"mass" : 5,
 	"sleepSpeed" : .1,
-	"sleepTimeLimit" : 1
+	"sleepTimeLimit" : 4
 })
 
 addType("atmosphere", {
@@ -259,6 +307,8 @@ demo.addScene("Moon", function() {
 
 	var lightBaseShape = new CANNON.Sphere(0.5);
 	var lightBase = new CANNON.Body({
+		collisionFilterGroup:  1,
+		collisionFilterMask:  2,
 		mass : 5
 	});
 	lightBase.addShape(lightBaseShape);
@@ -314,7 +364,7 @@ demo.addScene("Moon", function() {
 		moon_to_planet.normalize();
 		moon_to_planet.mult(80, moon.velocity);
 
-		if (bodies.length > 100) {
+		if (bodies.length > 20) {
 			var b = bodies.shift();
 			demo.removeVisual(b);
 			world.remove(b);
