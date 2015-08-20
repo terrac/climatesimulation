@@ -1,3 +1,31 @@
+1 pull from laptop and sync with desktop
+
+1 a large atmosphere type / large atmosphere layer
+2 no "on collision" detection, run on things that aren't asleep using lists 
+3 increase steps slowly to 600
+4 make like earth (whether with a designer or the other thing)
+5 cook the earth (slider for co2, water vapor, natural disasters)
+
+
+
+
+
+1 finish up mapping to 
+
+1 i am dropdown (god,g-d,allah,nothing, the vegan omnipresence,
+2 i want to destroy the disbelievers/believers (based on previous choice)
+3 but first I have to create the earth
+
+1 co2 level
+2 atmospheric moisture
+  (both reduce emissions, one by more)
+3 relate heat to real temperatures (but internally just use "heat")
+4 specific disasters (like yellowstone)
+  
+
+ 
+
+
 1 17 fps is fine when you aren't going for speed (ie slow down steps essentially to deal with slowness)
 2
 
