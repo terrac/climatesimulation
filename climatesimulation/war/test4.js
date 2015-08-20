@@ -8,42 +8,44 @@ function hideHeat(){
 	}
 }
 
-setInterval(function() {
-	demo.settings.stepFrequency = 120
-}, 1)
-setInterval(function() {
-	demo.settings.stepFrequency = 160
-}, 30)
+freqCount = 1
+var intervFreq= setInterval(function() {
+	demo.settings.stepFrequency = freqCount * 60
+	freqCount++;
+	if(freqCount > 2){
+		clearInterval(intervFreq);
+	}
+}, 100)
 
 setInterval(function() {
 	distributeHeat = true;
 	for(idx in basicBodies){
 
-		basicBodies[idx].addEventListener("collide", function(e) {
-			if(!distributeHeat)
-				return;
-			var b1=e.contact.bi;
-			var b2 = e.contact.bj;
-			if(b1 === undefined||b2 === undefined||b1.cli === undefined || b2.cli === undefined)
-				return;
-			
-			
-			var newHeat = (b1.cli.heat + b2.cli.heat) * .5
-			b1.cli.heat = newHeat;
-			b2.cli.heat = newHeat;
-			
-			var vis = demo.getVisual(b1);
-			var vis2 = demo.getVisual(b2);
-			
-			if(showHeat){
-				var colorFilter = 0x030000;
-				vis.material.color.setHex(0x110000+Math.floor(b1.heat)*colorFilter)	
-				vis2.material.color.setHex(0x110000+Math.floor(b2.heat)*colorFilter)	
-
-			}
-			
-
-		});
+//		basicBodies[idx].addEventListener("collide", function(e) {
+//			if(!distributeHeat)
+//				return;
+//			var b1=e.contact.bi;
+//			var b2 = e.contact.bj;
+//			if(b1 === undefined||b2 === undefined||b1.cli === undefined || b2.cli === undefined)
+//				return;
+//			
+//			
+//			var newHeat = (b1.cli.heat + b2.cli.heat) * .5
+//			b1.cli.heat = newHeat;
+//			b2.cli.heat = newHeat;
+//			
+//			var vis = demo.getVisual(b1);
+//			var vis2 = demo.getVisual(b2);
+//			
+//			if(showHeat){
+//				var colorFilter = 0x030000;
+//				vis.material.color.setHex(0x110000+Math.floor(b1.heat)*colorFilter)	
+//				vis2.material.color.setHex(0x110000+Math.floor(b2.heat)*colorFilter)	
+//
+//			}
+//			
+//
+//		});
 
 	}
 }, 30000)
@@ -191,6 +193,7 @@ function useLayer() {
 }
 
 var atmosphereShape = new CANNON.Sphere(.4);
+var atmosphereLargeShape = new CANNON.Sphere(1.6);
 var smallShape = new CANNON.Sphere(0.2);
 var smallerShape = new CANNON.Sphere(0.15);
 var lightShape = new CANNON.Sphere(0.05);
@@ -248,6 +251,17 @@ addType("atmosphere", {
 	"sleepTimeLimit" : 1
 })
 
+addType("atmosphereLarge", {
+	"gravity" : gravity,
+	"visibility" : true,
+	"color" : 0xFFFFFF,
+	"opacity" : .01,
+	"shape" : atmosphereLargeShape,
+	"mass" : 1,
+	"sleepSpeed" : .1,
+	"sleepTimeLimit" : 1
+})
+
 addType("clouds", {
 	"gravity" : gravity,
 	"visibility" : true,
@@ -296,11 +310,20 @@ addLayer({
 	"params" : [7]
 
 })
+//addLayer({
+//	"type" : "atmosphere",
+//	"start" : 4000,
+//	"timeBetween" : 30,
+//	"amount" : 200,
+//	"random" : randomAllOver,
+//	"params" : [14]
+//})
+
 addLayer({
-	"type" : "atmosphere",
-	"start" : 4000,
+	"type" : "atmosphereLarge",
+	"start" : 6000,
 	"timeBetween" : 30,
-	"amount" : 200,
+	"amount" : 30,
 	"random" : randomAllOver,
 	"params" : [14]
 })
