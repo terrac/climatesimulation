@@ -940,7 +940,6 @@ CANNON.Demo.prototype.addVisual = function(body,material){
         //mesh.useQuaternion = true;
         this.scene.add(mesh);
     }
-    body.originalMaterial = material
 };
 
 CANNON.Demo.prototype.removePartialVisuals = function(pct){
@@ -992,12 +991,6 @@ CANNON.Demo.prototype.removeAllVisuals = function(){
         this.removeVisual(this.bodies[0]);
     }
 };
-
-
-CANNON.Demo.prototype.getVisual = function(){
-	return demo.visuals[demo.bodies.indexOf(body)].children[0]	
-};
-
 
 CANNON.Demo.prototype.shape2mesh = function(body,material){
     var wireframe = this.settings.renderMode === "wireframe";
