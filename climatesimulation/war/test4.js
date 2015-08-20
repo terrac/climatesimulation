@@ -62,8 +62,9 @@ randomAllOver = function(shape) {
 			.random() * shape * 2 - shape);
 }
 randomPoles = function(shape) {
-	currentBody.position.set(Math.random() * shape, Math.random()> .5? 5: -5, Math
-			.random() * shape);
+	currentBody.position.set(Math.random() * shape * 2 - shape, Math.random()> .5? 5: -5, Math
+			.random() * shape * 2 - shape);
+	
 }
 
 picturePosition = function(color,range) {
@@ -335,7 +336,7 @@ addLayer({
 
 addLayer({
 	"type" : "clouds",
-	"start" : 10000,
+	"start" : 3000,
 	"timeBetween" : 30,
 	"amount" : 10,
 	"random" : randomPoles,
