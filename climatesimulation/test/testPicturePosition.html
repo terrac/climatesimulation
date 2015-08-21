@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>cannon.js - callbacks demo</title>
+<meta charset="utf-8">
+
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+
+
+
+	<canvas id="earthCanvas"></canvas>
+	<script>
+    
+
+	var myCanvas = document.getElementById('earthCanvas');
+	var ctx = myCanvas.getContext('2d');
+	var img = new Image;
+	pData = []
+	img.onload = function(){
+	  myCanvas.height = img.height;
+	  myCanvas.width = img.width;
+	  ctx.drawImage(img,0,0); // Or at whatever offset you like
+	  	for(a = 0; a < myCanvas.width; a+=32){
+		for(b = 0; b < myCanvas.height; b+=32){
+			var pixelData = ctx.getImageData(a, b, 1, 1).data;
+			//a = u b = x or maybe reverse
+			x = Math.sin((a + .5) * 3.14)
+			y = Math.sin((b - .5) * 3.14)
+			z = Math.sin((b - .5) * 3.14)
+			pData.push([x,y,z,pixelData])
+		}
+	}
+	console.log(pData)  
+	};
+	img.src = "flatearth.jpg";    
+	
+	
+	
+	
+
+  
+    	//
+    	
+		//group by Y axis
+		//make sun rotate around x axis (if it doesn't)
+		//show Y axis correlation
+
+
+    </script>
+</body>
+</html>

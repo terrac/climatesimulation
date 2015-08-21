@@ -1,8 +1,31 @@
+1 take testPicturePosition.html 
+2 map it to small colored balls with no gravity (ie add demo, add visual, then nothing)
+if it is the right sphere then continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 1 pull from laptop and sync with desktop
 
-1 a large atmosphere type / large atmosphere layer
-2 no "on collision" detection, run on things that aren't asleep using lists 
-3 increase steps slowly to 600
+#1 a large atmosphere type / large atmosphere layer
+#2 no "on collision" detection, 
+run on things that aren't asleep using lists 
+#3 increase steps slowly to 600 (too slow)
 4 make like earth (whether with a designer or the other thing)
 5 cook the earth (slider for co2, water vapor, natural disasters)
 
