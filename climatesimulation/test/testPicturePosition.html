@@ -7,6 +7,14 @@
 
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<script src="assets/cannon.js"></script>
+<script src="assets/cannon.demo.js"></script>
+<script src="assets/dat.gui.js"></script>
+<script src="assets/Three.js"></script>
+<script src="assets/TrackballControls.js"></script>
+<script src="assets/Detector.js"></script>
+<script src="assets/Stats.js"></script>
+<script src="assets/smoothie.js"></script>
 </head>
 <body>
 
@@ -20,7 +28,10 @@
 	var ctx = myCanvas.getContext('2d');
 	var img = new Image;
 	pData = []
+	img.crossOrigin=null;
+	
 	img.onload = function(){
+   	
 	  myCanvas.height = img.height;
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
@@ -35,6 +46,42 @@
 		}
 	}
 	console.log(pData)  
+	
+	var demo = new CANNON.Demo();
+
+demo.addScene("Moon", function() {
+	world = demo.getWorld();
+	// world.broadphase = new CANNON.SAPBroadphase();
+	world.solver.iterations = 1;
+	world.allowSleep = true;
+	// world.allowSleep = false;
+
+
+	pCount = 0;
+	interval = setInterval(function() {
+		var cD = pData[pCount];
+		var pShape = new CANNON.Sphere(0.1);
+		var p = new CANNON.Body({
+			mass : 5
+		});
+		p.addShape(pShape);
+	
+		p.position.set(cD[0]*5, cD[1]*5, cD[2]*5);
+		colorD = 0x010000 * cd[3][0]+0x000100 * cd[3][1]+0x000001 * cd[3][2]
+		p.linearDamping = 0.0;
+		world.add(p);
+		demo.addVisual(p, new THREE.MeshLambertMaterial({
+			color : colorD
+		}));
+		
+
+	}, 30);
+
+
+});
+
+demo.start();
+	
 	};
 	img.src = "flatearth.jpg";    
 	
