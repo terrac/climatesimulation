@@ -35,14 +35,19 @@
 	  myCanvas.height = img.height;
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
+	  radius = 5;
 	  	for(a = 0; a < myCanvas.width; a+=32){
 		for(b = 0; b < myCanvas.height; b+=32){
 			var pixelData = ctx.getImageData(a, b, 1, 1).data;
-			//a = u b = x or maybe reverse
-			x = Math.sin((a + .5) * 3.14)
-			y = Math.sin((b - .5) * 3.14)
-			z = Math.sin((b - .5) * 3.14)
-			pData.push([x,y,z,pixelData])
+			
+			theta = 2 * Math.PI * a;//U
+			phi = Math.PI * b;//V
+			
+			_x = Math.cos(theta) * Math.sin(phi) * radius;
+			_y = Math.sin(theta) * Math.sin(phi) * radius;
+			_z = -Math.cos(phi) * radius;
+			
+			pData.push([_x,_y,_z,pixelData])
 		}
 	}
 	console.log(pData)  
@@ -66,15 +71,16 @@ demo.addScene("Moon", function() {
 		});
 		p.addShape(pShape);
 	
-		p.position.set(cD[0]*5, cD[1]*5, cD[2]*5);
-		colorD = 0x010000 * cd[3][0]+0x000100 * cd[3][1]+0x000001 * cd[3][2]
+		p.position.set(cD[0], cD[1], cD[2]);
+		colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
 		p.linearDamping = 0.0;
 		world.add(p);
 		demo.addVisual(p, new THREE.MeshLambertMaterial({
 			color : colorD
 		}));
-		
-
+		console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
+		console.log(colorD)
+		pCount++;
 	}, 30);
 
 
