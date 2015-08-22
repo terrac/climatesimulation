@@ -35,19 +35,21 @@
 	  myCanvas.height = img.height;
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
-	  radius = 5;
-	  	for(a = 0; a < myCanvas.width; a+=32){
-		for(b = 0; b < myCanvas.height; b+=32){
-			var pixelData = ctx.getImageData(a, b, 1, 1).data;
+	  radius = .5;
+	  	for(a = 0; a*32 < myCanvas.width; a+=1){
+		for(b = 0; b*32 < myCanvas.height; b+=1){
+			var pixelData = ctx.getImageData(a*32, b*32, 1, 1).data;
 			
 			theta = 2 * Math.PI * a;//U
 			phi = Math.PI * b;//V
 			
-			_x = Math.cos(theta) * Math.sin(phi) * radius;
-			_y = Math.sin(theta) * Math.sin(phi) * radius;
-			_z = -Math.cos(phi) * radius;
-			
-			pData.push([_x,_y,_z,pixelData])
+			//_x = Math.cos(theta) * Math.sin(phi) * radius;
+			//_y = Math.sin(theta) * Math.sin(phi) * radius;
+			//_z = -Math.cos(phi) * radius;
+			x = Math.sin(a)* radius;
+			y = Math.cos(a)* radius;
+			z = -Math.cos(b)* radius;
+			pData.push([x,y,z,pixelData])
 		}
 	}
 	console.log(pData)  
