@@ -15,6 +15,7 @@
 <script src="assets/Detector.js"></script>
 <script src="assets/Stats.js"></script>
 <script src="assets/smoothie.js"></script>
+<script src="intermediate.js"></script>
 </head>
 <body>
 
@@ -23,36 +24,26 @@
 	<canvas id="earthCanvas"></canvas>
 	<script>
     
-
-	var myCanvas = document.getElementById('earthCanvas');
-	var ctx = myCanvas.getContext('2d');
-	var img = new Image;
-	pData = []
-	img.crossOrigin=null;
-	
-	img.onload = function(){
-   	
-	  myCanvas.height = img.height;
-	  myCanvas.width = img.width;
-	  ctx.drawImage(img,0,0); // Or at whatever offset you like
-	  radius = .5;
-	  	for(a = 0; a*32 < myCanvas.width; a+=1){
-		for(b = 0; b*32 < myCanvas.height; b+=1){
-			var pixelData = ctx.getImageData(a*32, b*32, 1, 1).data;
-			
-			theta = 2 * Math.PI * a;//U
-			phi = Math.PI * b;//V
-			
-			//_x = Math.cos(theta) * Math.sin(phi) * radius;
-			//_y = Math.sin(theta) * Math.sin(phi) * radius;
-			//_z = -Math.cos(phi) * radius;
-			x = Math.sin(a)* radius;
-			y = Math.cos(a)* radius;
-			z = -Math.cos(b)* radius;
-			pData.push([x,y,z,pixelData])
-		}
-	}
-	console.log(pData)  
+    pData = []
+    radius = 10000
+	for(c = 0; c < intermediate.length; c++){
+        var a = intermediate[c][0];
+        var b = intermediate[c][1];
+        var colors = intermediate[c][2];
+        
+		theta = 2 * Math.PI * a;//U
+		phi = Math.PI * b;//V
+		
+		x = Math.cos(theta) * Math.sin(phi) * radius;
+		y = Math.sin(theta) * Math.sin(phi) * radius;
+		z = -Math.cos(phi) * 5;
+		
+		//x = Math.cos(a)* radius;
+		//y = Math.sin(a)* radius ;
+		//z = Math.cos(b)* radius;
+		
+		pData.push([x,y,z,colors])
+	}  
 	
 	var demo = new CANNON.Demo();
 
@@ -66,6 +57,11 @@ demo.addScene("Moon", function() {
 
 	pCount = 0;
 	interval = setInterval(function() {
+		if(pCount >= pData.length){
+			clearInterval(interval)
+			return;	
+		}
+		
 		var cD = pData[pCount];
 		var pShape = new CANNON.Sphere(0.1);
 		var p = new CANNON.Body({
@@ -90,8 +86,6 @@ demo.addScene("Moon", function() {
 
 demo.start();
 	
-	};
-	img.src = "flatearth.jpg";    
 	
 	
 	
