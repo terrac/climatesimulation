@@ -25,22 +25,17 @@
 	<script>
     
     pData = []
-    radius = 10000
+    radius = 10
 	for(c = 0; c < intermediate.length; c++){
         var a = intermediate[c][0];
         var b = intermediate[c][1];
         var colors = intermediate[c][2];
         
-		theta = 2 * Math.PI * a;//U
-		phi = Math.PI * b;//V
+        
+		x = Math.cos(a) * Math.cos(b) * radius;
+		y = Math.cos(a) * Math.sin(b) * radius;
+		z = Math.sin(a) * radius;
 		
-		x = Math.cos(theta) * Math.sin(phi) * radius;
-		y = Math.sin(theta) * Math.sin(phi) * radius;
-		z = -Math.cos(phi) * 5;
-		
-		//x = Math.cos(a)* radius;
-		//y = Math.sin(a)* radius ;
-		//z = Math.cos(b)* radius;
 		
 		pData.push([x,y,z,colors])
 	}  

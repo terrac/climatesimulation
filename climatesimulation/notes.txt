@@ -1,3 +1,7 @@
+1 more spheres towards the center
+
+
+
 1 take testPicturePosition.html 
 2 map it to small colored balls with no gravity (ie add demo, add visual, then nothing)
 if it is the right sphere then continue
