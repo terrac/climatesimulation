@@ -76,6 +76,14 @@ demo.addScene("Moon", function() {
 		pCount++;
 	}, 30);
 
+	freqCount = 100
+	var intervFreq= setInterval(function() {
+	demo.settings.stepFrequency = freqCount * 60
+	freqCount++;
+	if(freqCount > 2){
+		clearInterval(intervFreq);
+	}
+}, 100)
 
 });
 
