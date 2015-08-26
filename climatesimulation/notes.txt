@@ -1,4 +1,7 @@
 1 more spheres towards the center
+  a divide by half and then subtract current number
+  b mulitply the absolute value times a constant
+  c the hi
 
 
 
