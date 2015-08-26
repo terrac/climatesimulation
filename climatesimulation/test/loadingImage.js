@@ -13,7 +13,7 @@ var myCanvas = document.getElementById('earthCanvas');
 	  for(b = 0; b < myCanvas.height; b+=1){
 		var widthIncrement = Math.abs(myCanvas.height/2 - b)
 		//console.log(widthIncrement)
-		widthIncrement = widthIncrement/3
+		widthIncrement = widthIncrement* 1
 		widthIncrement += 5
 		console.log(widthIncrement)
 		widthIncrement = Math.floor(widthIncrement)
