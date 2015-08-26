@@ -52,29 +52,32 @@ demo.addScene("Moon", function() {
 
 	pCount = 0;
 	interval = setInterval(function() {
-		if(pCount >= pData.length){
-			clearInterval(interval)
-			return;	
-		}
+		for(a = 0; a < 100; a++){
 		
-		var cD = pData[pCount];
-		var pShape = new CANNON.Sphere(0.1);
-		var p = new CANNON.Body({
-			mass : 5
-		});
-		p.addShape(pShape);
-	
-		p.position.set(cD[0], cD[1], cD[2]);
-		colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
-		p.linearDamping = 0.0;
-		world.add(p);
-		demo.addVisual(p, new THREE.MeshLambertMaterial({
-			color : colorD
-		}));
-		console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
-		console.log(colorD)
-		pCount++;
-	}, 30);
+			if(pCount >= pData.length){
+				clearInterval(interval)
+				return;	
+			}
+			
+			var cD = pData[pCount];
+			var pShape = new CANNON.Sphere(0.1);
+			var p = new CANNON.Body({
+				mass : 5
+			});
+			p.addShape(pShape);
+		
+			p.position.set(cD[0], cD[1], cD[2]);
+			colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
+			p.linearDamping = 0.0;
+			world.add(p);
+			demo.addVisual(p, new THREE.MeshLambertMaterial({
+				color : colorD
+			}));
+			//console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
+			console.log(pCount)
+			pCount++;
+		}
+	}, 0);
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
