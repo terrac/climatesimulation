@@ -13,13 +13,13 @@ var myCanvas = document.getElementById('earthCanvas');
 	  for(b = 0; b < myCanvas.height; b+=1){
 		var widthIncrement = Math.abs(myCanvas.height/2 - b)
 		//console.log(widthIncrement)
-		widthIncrement = widthIncrement* 100
-		widthIncrement += 5
+		widthIncrement = (widthIncrement+5)* 20
+		
 		console.log(widthIncrement)
 		widthIncrement = Math.floor(widthIncrement)
-	  	for(a = 0; a < myCanvas.width; a+=widthIncrement){
+	  	for(a = 0; a* widthIncrement < myCanvas.width; a+=1){
 	  		
-			var pixelData = ctx.getImageData(a, b, 1, 1).data;
+			var pixelData = ctx.getImageData(a* widthIncrement, b, 1, 1).data;
 			intermediate.push([a,b,[pixelData[0],pixelData[1],pixelData[2]]])
 			theta = 2 * Math.PI * a;//U
 			phi = Math.PI * b;//V
