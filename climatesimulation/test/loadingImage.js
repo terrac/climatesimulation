@@ -10,14 +10,17 @@ var myCanvas = document.getElementById('earthCanvas');
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
 	  radius = 10;	  
-	  for(b = 0; b < myCanvas.height; b+=1){
-		var widthIncrement = Math.abs(myCanvas.height/2 - b)
-		//console.log(widthIncrement)
-		widthIncrement = (widthIncrement+5)* 20
+	  for(b = 1; b < myCanvas.height; b+=1){
+		var widthIncrement = 1-(b/Math.abs(myCanvas.height/2 - b))
+		console.log(widthIncrement)
+		widthIncrement = Math.sin(widthIncrement) * 2000
 		
 		console.log(widthIncrement)
-		widthIncrement = Math.floor(widthIncrement)
-	  	for(a = 0; a* widthIncrement < myCanvas.width; a+=1){
+		widthIncrement = Math.abs(Math.floor(widthIncrement))
+		if(widthIncrement < 10){
+			widthIncrement = 100
+		}
+	  	for(a = 1; a* widthIncrement < myCanvas.width; a+=1){
 	  		
 			var pixelData = ctx.getImageData(a* widthIncrement, b, 1, 1).data;
 			intermediate.push([a,b,[pixelData[0],pixelData[1],pixelData[2]]])
