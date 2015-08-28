@@ -15,20 +15,23 @@
 <script src="assets/Detector.js"></script>
 <script src="assets/Stats.js"></script>
 <script src="assets/smoothie.js"></script>
-<script src="intermediate.js"></script>
+
+
+<!-- <script src="intermediate.js"></script> -->
+
 </head>
 <body>
 
 
 
-	<canvas id="earthCanvas"></canvas>
+	
 	<script>
-    
+function runEarth(){    
     pData = []
-    radius = 5
+    radius = 2
 	for(c = 0; c < intermediate.length; c++){
-        var a = intermediate[c][0];
-        var b = intermediate[c][1];
+        var b = intermediate[c][0];
+        var a = intermediate[c][1];
         var colors = intermediate[c][2];
         
         
@@ -91,7 +94,7 @@ demo.addScene("Moon", function() {
 });
 
 demo.start();
-	
+}	
 	
 	
 	
@@ -106,5 +109,7 @@ demo.start();
 
 
     </script>
+    <canvas id="earthCanvas"></canvas>
+    <script src="loadingImage.js"></script>
 </body>
 </html>
