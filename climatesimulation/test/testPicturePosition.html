@@ -26,23 +26,24 @@
 
 
 	<script>
-function runEarth(){    
+function runEarth(intermediate,colorsA,imageWidth){    
     pData = []
     radius = 2
 	for(c = 0; c < intermediate.length; c++){
         var b = intermediate[c][0];
         var a = intermediate[c][1];
-        var colors = intermediate[c][2];
         
         
 		x = Math.cos(a) * Math.cos(b) * radius;
 		y = Math.cos(a) * Math.sin(b) * radius;
 		z = Math.sin(a) * radius;
 		
-		
-		pData.push([x,y,z,colors])
+		if( c % imageWidth == 0){
+			pData.push([])
+		}
+		pData[pData.length-1].push([x,y,z,b])
 	}  
-	
+
 	var demo = new CANNON.Demo();
 
 demo.addScene("Moon", function() {
@@ -53,29 +54,18 @@ demo.addScene("Moon", function() {
 	// world.allowSleep = false;
 
 
+    
 	pCount = 0;
+	pInnerCount = 0;
 	interval = setInterval(function() {
-		for(a = 0; a < 100; a++){
+		for(a = 0; a < 2; a++){
 		
 			if(pCount >= pData.length){
 				clearInterval(interval)
-				
-				demo.bodies.sort(function(b,a) {
-				  var x = a.position.z - b.position.z;
-				  return x == 0? a.position.x - b.position.x : x;
-				});
-				for(ind in demo.bodies){
-					var col=pData[ind][3]
-					colorD = 0x010000 * col[0]+0x000100 * col[1]+0x000001 * col[2]
-					var vis=demo.getVisual(demo.bodies[ind])
-					vis.material= new THREE.MeshLambertMaterial({
-						color : colorD
-					});
-				}
-				return;	
+				return;									
 			}
 			
-			var cD = pData[pCount];
+			var cD = pData[pCount][pInnerCount];
 			var pShape = new CANNON.Sphere(0.1);
 			var p = new CANNON.Body({
 				mass : 5
@@ -83,17 +73,22 @@ demo.addScene("Moon", function() {
 			p.addShape(pShape);
 		
 			p.position.set(cD[0], cD[1], cD[2]);
-			colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
+			var colors = colorsA[pCount*imageWidth+pInnerCount]
+			colorD = 0x010000 * colors[0]+0x000100 * colors[1]+0x000001 * colors[2]
 			p.linearDamping = 0.0;
 			world.add(p);
 			demo.addVisual(p, new THREE.MeshLambertMaterial({
 				color : colorD
 			}));
 			console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
-			console.log(cD[3])
-			pCount++;
+			
+			pInnerCount++;
+			if(pData[pCount].length <= pInnerCount){
+				pInnerCount = 0;
+				pCount++;
+			}
 		}
-	}, 1);
+	}, 1000);
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
@@ -102,7 +97,7 @@ demo.addScene("Moon", function() {
 	if(freqCount > 5000){
 		clearInterval(intervFreq);
 	}
-}, 100)
+}, 0)
 
 });
 

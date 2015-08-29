@@ -6,6 +6,7 @@ var myCanvas = document.getElementById('earthCanvas');
 	
 	img.onload = function(){
    	  intermediate = []
+   	  colors = []
 	  myCanvas.height = img.height;
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
@@ -24,13 +25,14 @@ var myCanvas = document.getElementById('earthCanvas');
 	  	for(a = 0; a < myCanvas.width; a+=1){
 	  		
 			var pixelData = ctx.getImageData(a, b, 1, 1).data;
-			intermediate.push([a,b,[pixelData[0],pixelData[1],pixelData[2]]])
+			colors.push([pixelData[0],pixelData[1],pixelData[2]])
+			intermediate.push([a,b])
 			
 		}
 	}
 	//call copy(intermediate) in console and then paste into file  	
 	console.log(intermediate)
-		runEarth();
+		runEarth(intermediate,colors,img.width);
 	};
 	//img.src = "flatearth.jpg";
 	img.src = "testSphere.png";
