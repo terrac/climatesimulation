@@ -60,8 +60,8 @@ demo.addScene("Moon", function() {
 			if(pCount >= pData.length){
 				clearInterval(interval)
 				
-				demo.bodies.sort(function(a,b) {
-				  var x = a.position.y - b.position.y;
+				demo.bodies.sort(function(b,a) {
+				  var x = a.position.z - b.position.z;
 				  return x == 0? a.position.x - b.position.x : x;
 				});
 				for(ind in demo.bodies){
