@@ -994,8 +994,8 @@ CANNON.Demo.prototype.removeAllVisuals = function(){
 };
 
 
-CANNON.Demo.prototype.getVisual = function(){
-	return demo.visuals[demo.bodies.indexOf(body)].children[0]	
+CANNON.Demo.prototype.getVisual = function(body){
+	return this.visuals[this.bodies.indexOf(body)].children[0]	
 };
 
 

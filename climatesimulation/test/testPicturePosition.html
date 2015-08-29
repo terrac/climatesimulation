@@ -24,7 +24,7 @@
 
 
 
-	
+
 	<script>
 function runEarth(){    
     pData = []
@@ -59,6 +59,19 @@ demo.addScene("Moon", function() {
 		
 			if(pCount >= pData.length){
 				clearInterval(interval)
+				
+				demo.bodies.sort(function(a,b) {
+				  var x = a.position.y - b.position.y;
+				  return x == 0? a.position.x - b.position.x : x;
+				});
+				for(ind in demo.bodies){
+					var col=pData[ind][3]
+					colorD = 0x010000 * col[0]+0x000100 * col[1]+0x000001 * col[2]
+					var vis=demo.getVisual(demo.bodies[ind])
+					vis.material= new THREE.MeshLambertMaterial({
+						color : colorD
+					});
+				}
 				return;	
 			}
 			
@@ -76,11 +89,11 @@ demo.addScene("Moon", function() {
 			demo.addVisual(p, new THREE.MeshLambertMaterial({
 				color : colorD
 			}));
-			//console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
-			console.log(pCount)
+			console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
+			console.log(cD[3])
 			pCount++;
 		}
-	}, 0);
+	}, 1);
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
@@ -109,7 +122,7 @@ demo.start();
 
 
     </script>
-    <canvas id="earthCanvas"></canvas>
-    <script src="loadingImage.js"></script>
+	<canvas id="earthCanvas"></canvas>
+	<script src="loadingImage.js"></script>
 </body>
 </html>
