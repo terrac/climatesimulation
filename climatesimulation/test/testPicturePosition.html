@@ -26,24 +26,32 @@
 
 
 	<script>
-function runEarth(intermediate,colorsA,imageWidth){    
+function runEarth(){    
     pData = []
-    radius = 2
+    radius = 5
 	for(c = 0; c < intermediate.length; c++){
         var b = intermediate[c][0];
         var a = intermediate[c][1];
+        var colors = intermediate[c][2];
+        
+		length = Math.sqrt(a * a + b * b);
+		
+		// normalize vector
+		a /= length;
+		b /= length;
+        
+        a = 2 * Math.PI * a
+        b = Math.PI * b
         
         
 		x = Math.cos(a) * Math.cos(b) * radius;
 		y = Math.cos(a) * Math.sin(b) * radius;
 		z = Math.sin(a) * radius;
 		
-		if( c % imageWidth == 0){
-			pData.push([])
-		}
-		pData[pData.length-1].push([x,y,z,b])
+		
+		pData.push([x,y,z,colors])
 	}  
-
+	
 	var demo = new CANNON.Demo();
 
 demo.addScene("Moon", function() {
@@ -54,18 +62,29 @@ demo.addScene("Moon", function() {
 	// world.allowSleep = false;
 
 
-    
 	pCount = 0;
-	pInnerCount = 0;
 	interval = setInterval(function() {
-		for(a = 0; a < 2; a++){
+		for(a = 0; a < 100000; a++){
 		
 			if(pCount >= pData.length){
 				clearInterval(interval)
-				return;									
+				return;
+				demo.bodies.sort(function(b,a) {
+				  var x = a.position.x - b.position.x;				  
+				  return x == 0? a.position.z - b.position.z : x;
+				});
+				for(ind in demo.bodies){
+					var col=pData[ind][3]
+					colorD = 0x010000 * col[0]+0x000100 * col[1]+0x000001 * col[2]
+					var vis=demo.getVisual(demo.bodies[ind])
+					vis.material= new THREE.MeshLambertMaterial({
+						color : colorD
+					});
+				}
+				return;	
 			}
 			
-			var cD = pData[pCount][pInnerCount];
+			var cD = pData[pCount];
 			var pShape = new CANNON.Sphere(0.1);
 			var p = new CANNON.Body({
 				mass : 5
@@ -73,22 +92,17 @@ demo.addScene("Moon", function() {
 			p.addShape(pShape);
 		
 			p.position.set(cD[0], cD[1], cD[2]);
-			var colors = colorsA[pCount*imageWidth+pInnerCount]
-			colorD = 0x010000 * colors[0]+0x000100 * colors[1]+0x000001 * colors[2]
+			colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
 			p.linearDamping = 0.0;
 			world.add(p);
 			demo.addVisual(p, new THREE.MeshLambertMaterial({
 				color : colorD
 			}));
 			console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
-			
-			pInnerCount++;
-			if(pData[pCount].length <= pInnerCount){
-				pInnerCount = 0;
-				pCount++;
-			}
+			console.log(cD[3])
+			pCount++;
 		}
-	}, 1000);
+	}, 1);
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
@@ -97,7 +111,7 @@ demo.addScene("Moon", function() {
 	if(freqCount > 5000){
 		clearInterval(intervFreq);
 	}
-}, 0)
+}, 100)
 
 });
 
