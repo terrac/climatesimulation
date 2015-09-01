@@ -10,7 +10,7 @@ var myCanvas = document.getElementById('earthCanvas');
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
 	  radius = 10;	  
-	  for(b = 0; b < myCanvas.height; b+=1){
+	  for(b = 0; b < myCanvas.height; b+=25){
 //		var widthIncrement = Math.abs(myCanvas.height/2 - b)
 //		
 //		widthIncrement = widthIncrement * 50
@@ -21,7 +21,7 @@ var myCanvas = document.getElementById('earthCanvas');
 //			widthIncrement = 10
 //		}
 //		widthIncrement = 50
-	  	for(a = 0; a < myCanvas.width; a+=1){
+	  	for(a = 0; a < myCanvas.width; a+=25){
 	  		
 			var pixelData = ctx.getImageData(a, b, 1, 1).data;
 			intermediate.push([a,b,[pixelData[0],pixelData[1],pixelData[2]]])
@@ -30,8 +30,8 @@ var myCanvas = document.getElementById('earthCanvas');
 	}
 	//call copy(intermediate) in console and then paste into file  	
 	console.log(intermediate)
-		runEarth();
+		runEarth(img.height,img.width);
 	};
-	//img.src = "flatearth.jpg";
-	img.src = "testSphere.png";
+	img.src = "flatearth2.jpg";
+	//img.src = "testSphere.png";
 		
