@@ -34,19 +34,15 @@ function runEarth(){
         var a = intermediate[c][1];
         var colors = intermediate[c][2];
         
-		length = Math.sqrt(a * a + b * b);
-		
-		// normalize vector
-		a /= length;
-		b /= length;
+		;
         
-        theta = 2 * Math.PI * a
-        phi = Math.PI * b
+        theta =  a / 2 * Math.PI
+        phi =  b / Math.PI
         
-        
-		//x = Math.cos(a) * Math.cos(b) * radius;
-		//y = Math.cos(a) * Math.sin(b) * radius;
-		//z = Math.sin(a) * radius;
+        console.log(a)
+		x = Math.cos(a) * Math.cos(b) * radius;
+		y = Math.cos(a) * Math.sin(b) * radius;
+		z = Math.sin(a) * radius;
 		
 		x = Math.cos(theta) * Math.sin(phi) * radius;
 		y = Math.sin(theta) * Math.sin(phi) * radius;
@@ -68,7 +64,7 @@ demo.addScene("Moon", function() {
 
 	pCount = 0;
 	interval = setInterval(function() {
-		for(a = 0; a < 100000; a++){
+		for(a = 0; a < 1; a++){
 		
 			if(pCount >= pData.length){
 				clearInterval(interval)
@@ -106,7 +102,7 @@ demo.addScene("Moon", function() {
 			console.log(cD[3])
 			pCount++;
 		}
-	}, 1);
+	}, 100);
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
@@ -115,7 +111,7 @@ demo.addScene("Moon", function() {
 	if(freqCount > 5000){
 		clearInterval(intervFreq);
 	}
-}, 100)
+	}, 100)
 
 });
 
