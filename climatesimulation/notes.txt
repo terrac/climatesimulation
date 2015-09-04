@@ -1,3 +1,32 @@
+1 create an intermediate step that takes in all of the maps and combines them into one data set
+2 temperature map
+  population map
+  countries map?
+3 something that switches colors in between  
+4 formula that runs through all and does xxx
+5 physical demonstration (emissions, heat in the middle)
+6 comparison
+7 video (and website)  
+
+
+1 take code and put into previous framework as a layer (import the image, but hide after importing)
+2 more maps
+  a heat map
+  //2 sea level map
+  //3 elevation map
+  4 population map
+  combine them all through making them roughly the same size, picking the same points on each one
+  and adding that data onto each sphere
+
+
+1 take all bodies
+2 sort by y axis (then x axis)
+3 loop through positions an additional time and assign color
+4 the eendd
+
+
+
+
 1 more spheres towards the center
   a divide by half and then subtract current number
   b mulitply the absolute value times a constant
