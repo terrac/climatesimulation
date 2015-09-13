@@ -1,3 +1,6 @@
+1 no gravity, no physics (still use physics engine)
+
+
 1 new javascript file put gravity in center
 2 simulate unrealistic population growth
 

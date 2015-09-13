@@ -16,7 +16,7 @@ function runSimulation(demo){
 		if(freqCount > 2){
 			clearInterval(intervFreq);
 		}
-	}, 100)
+	}, 1)//100
 	
 	setInterval(function() {
 		distributeHeat = true;
@@ -135,8 +135,8 @@ function runSimulation(demo){
 		// Fore is pointing in the moon-planet direction
 		moon_to_planet.normalize();
 		//moon_to_planet.mult(1500 / Math.pow(distance, 2), this.force);
-		moon_to_planet.mult(10, this.force);
-	
+		moon_to_planet.mult(10030303, this.force);
+		//console.log(this.gameType)
 	}
 	
 	types = {}
@@ -204,7 +204,7 @@ function runSimulation(demo){
 	var smallShape = new CANNON.Sphere(0.2);
 	var smallerShape = new CANNON.Sphere(0.15);
 	var lightShape = new CANNON.Sphere(0.05);
-	var planetShape = new CANNON.Sphere(1.5);
+	var planetShape = new CANNON.Sphere(2.7);
 	var particleShape = new CANNON.Particle();
 	
 	addType("planet", {
@@ -290,59 +290,8 @@ function runSimulation(demo){
 		"amount" : 1,
 		"random" : randomNone,
 	})
-	addLayer({
-		"type" : "dirt",
-		"start" : 30,
-		"timeBetween" : 30,
-		"amount" : 1,
-		"random" : randomAllOver,
-		"params" : [3]
-	})
 	
-	addLayer({
-		"type" : "greenery",
-		"start" : 200,
-		"timeBetween" : 30,
-		"amount" : 90,
-		"random" : randomAllOver,
-		"params" : [5]
-	})
 	
-	addLayer({
-		"type" : "ocean",
-		"start" : 600,
-		"timeBetween" : 30,
-		"amount" : 300,
-		"random" : randomAllOver,
-		"params" : [7]
-	
-	})
-	//addLayer({
-	//	"type" : "atmosphere",
-	//	"start" : 4000,
-	//	"timeBetween" : 30,
-	//	"amount" : 200,
-	//	"random" : randomAllOver,
-	//	"params" : [14]
-	//})
-	
-	addLayer({
-		"type" : "atmosphereLarge",
-		"start" : 6000,
-		"timeBetween" : 30,
-		"amount" : 30,
-		"random" : randomAllOver,
-		"params" : [14]
-	})
-	
-	addLayer({
-		"type" : "clouds",
-		"start" : 3000,
-		"timeBetween" : 30,
-		"amount" : 10,
-		"random" : randomPoles,
-		"params" : [3]
-	})
 	
 	
 	function runWorld() {

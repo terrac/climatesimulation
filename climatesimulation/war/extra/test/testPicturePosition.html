@@ -55,6 +55,7 @@ function runEarth(height, width){
 	var demo = new CANNON.Demo();
 
 demo.addScene("Moon", function() {
+    //demo.settings.paused = true;
 	world = demo.getWorld();
 	// world.broadphase = new CANNON.SAPBroadphase();
 	world.solver.iterations = 1;
@@ -77,7 +78,8 @@ demo.addScene("Moon", function() {
 				mass : 5
 			});
 			p.addShape(pShape);
-		
+			p.preStep =gravityHeavy
+			p.gameType = "earthPoint"		
 			p.position.set(cD[0], cD[1], cD[2]);
 			colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
 			p.linearDamping = 0.0;
@@ -85,8 +87,8 @@ demo.addScene("Moon", function() {
 			demo.addVisual(p, new THREE.MeshLambertMaterial({
 				color : colorD
 			}));
-			console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
-			console.log(cD[3])
+			//console.log(cD[0]+" "+ cD[1]+" "+ cD[2])
+			//console.log(cD[3])
 			pCount++;
 		}
 	}, 0);
