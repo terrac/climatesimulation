@@ -1,3 +1,59 @@
+1 new javascript file put gravity in center
+2 simulate unrealistic population growth
+
+1st starting in africa, spreading out across the world
+  a create a new test
+  b pull code out to create earth
+  c for loop every turn that increases the population
+  d every so often the population increment changes
+  e climate changes affect human spread
+  
+2 congregating in the right climate ( and having the right climate for 200,000 years ago
+                                             (basically sahara/middle east = tropical, dont worry about the rest)
+3 drop people in start, let them spread out, color code them maybe                                             
+
+https://en.wikipedia.org/wiki/2015
+1 each thing is a "story" and you choose to advance the story or alter it
+  a economic union
+  b trade restriction
+  c enforced monetary ratio
+  d capital taken by rebels
+  e ceasefire/also toothless ceasefire
+  f resolution to combat x
+  g government retaliates against rebels
+  h ancient history destroyed
+  i space exploration 
+  j rebels form allied relationship
+  k travelers from x country are killed in y nation
+  l coalition of regional group led by country x helps fight y rebels on border
+  m mass killings by rebels
+  n earthquake in country x
+  o art expo by country y
+  p famous art is sold for tons of money
+  q country adopts social policy x
+  r famous judge/government person indicted for corruption
+  s economic summit
+  t poor country defaults on debts
+  
+  
+  
+1 a civilization game
+  a a space civ game based on the solar system
+  b different nations 
+  c the goal is nothing 
+  d topical events (like climate change, ferguson, etc)
+  e stat based (lots and lots of stats)
+  f first goal good internet searching
+  g second goal electric cars
+  h third goal renewable energy (choices to make)
+  i fourth helping people meet each other
+  j blacklivesmatter (choices)
+  k russia invading crimea (choices)
+  l invading iraq (choices)
+2 you get binary choices that are somewhat randomized and affect stats.  Stats affect which events occur somewhat randomized
+3 choices should be non obvious  (ie you choose to focus on issue X and that improves, but other things happen later)  
+  
+  
 1 create an intermediate step that takes in all of the maps and combines them into one data set
 2 temperature map
   population map

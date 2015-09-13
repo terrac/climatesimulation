@@ -16,7 +16,8 @@ var myCanvas = document.getElementById('earthCanvas');
 			widthIncrement *= Math.abs(myCanvas.height/2 - b)* .03
 		}
 		if(b > myCanvas.height - 70){
-			widthIncrement *= Math.abs(myCanvas.height/2 - b)* .1
+			break;
+			//widthIncrement *= Math.abs(myCanvas.height/2 - b)* .03
 		}
 		
 		widthIncrement = 40+ widthIncrement
