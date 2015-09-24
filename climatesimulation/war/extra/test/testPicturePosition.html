@@ -61,7 +61,7 @@ demo.addScene("Moon", function() {
 	world.solver.iterations = 1;
 	world.allowSleep = true;
 	// world.allowSleep = false;
-
+	runSimulation(demo);
 
 	pCount = 0;
 	interval = setInterval(function() {
@@ -101,7 +101,7 @@ demo.addScene("Moon", function() {
 		clearInterval(intervFreq);
 	}
 	}, 100)
-	runSimulation(demo);
+	
 });
 
 demo.start();

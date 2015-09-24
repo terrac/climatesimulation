@@ -1,3 +1,92 @@
+1 take simulation logic
+2 add in the heat distribution
+3 add in the sun
+4 add in emissions
+5 build the graph, compare to http://www.earth.columbia.edu/articles/view/2620
+                             http://www.currentresults.com/Environment-Facts/changes-in-earth-temperature.php
+                             
+6 put on website                             
+
+
+1 function to create the equivalent of more suns but smaller and asteroid colored
+2 add a semi random force
+3 do the same with rockets (more brightly colored)
+4 on click do the draw bounding box logic and save
+5 on click again draw another bounding box and if one is a rocket and the the other is an asteroid
+  then apply a force from the rocket to the asteroid.  if the rocket hits earth it explodes
+
+
+
+1 create an astroid away from the radius 
+2 spin it in a random direction
+3 do the same for a few rockets
+4 clicking on a rocket highlights it
+5 clicking on an asteroid calculates an intercept course
+6 the rocket intercepts and applies a force towards
+
+1 redirection mining
+  a the story is that there is a corporation that successfully has built rockets based on goverment funding
+  b and they have some extra room and you want to use that to mine different rocks.  So what you have done is 
+  c built a redirector.  A machine that is nuclear powered and your goal is to knock asteroids into the ocean
+    preferably nearer to a certain point.  The idea is that because you have planned this you can get there
+    first and reap the rewards.
+
+
+Surface mining[edit]
+On some types of asteroids, material may be scraped off the surface using a scoop or auger, or for larger pieces, an "active grab."[17] There is strong evidence that many asteroids consist of rubble piles,[29] making this approach possible.
+
+Shaft mining[edit]
+A mine can be dug into the asteroid, and the material extracted through the shaft. This requires precise knowledge to engineer accuracy of astro-location under the surface regolith and a transportation system to carry the desired ore to the processing facility.
+
+Magnetic rakes[edit]
+Asteroids with a high metal content may be covered in loose grains that can be gathered by means of a magnet.[17][30]
+
+Heating[edit]
+For volatile materials in extinct comets, heat can be used to melt and vaporize the matrix.[17][31]
+
+(additionally
+
+
+1 story
+the goal is to build robots that colonize the solar system and make livable places
+It is like the kerbal space program where you have component parts and you put them together
+
+
+you start off with a simple robotic design and a budget.  You have practical research,
+making, goals, and exploration
+
+1 first robot is a simple near earth miner designed to bring back raw materials
+2 you first start with a government budget and a mandate
+3 as you succeed various CEOs complain about losing their companies and you lose your budget unexpectedly
+4 you then have to actually compete and bring in more raw materials
+5 over time you get more options like builder robots and more automated robots (ie they start out human controlled)
+6 lots of little blurbs about the future 
+7 you design the miners, the asteroids are simple physics based items and you combine physics and various rules 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 1 no gravity, no physics (still use physics engine)
 
 

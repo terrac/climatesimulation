@@ -135,7 +135,7 @@ function runSimulation(demo){
 		// Fore is pointing in the moon-planet direction
 		moon_to_planet.normalize();
 		//moon_to_planet.mult(1500 / Math.pow(distance, 2), this.force);
-		moon_to_planet.mult(10030303, this.force);
+		moon_to_planet.mult(5000, this.force);
 		//console.log(this.gameType)
 	}
 	
@@ -394,4 +394,52 @@ function runSimulation(demo){
 	
 	}
 	runWorld();
+	
+	function addAsteroids() {
+		world = demo.getWorld();
+		// world.broadphase = new CANNON.SAPBroadphase();
+		world.solver.iterations = 1;
+		world.allowSleep = true;
+		// world.allowSleep = false;
+	
+		var asteroidBaseShape = new CANNON.Sphere(0.1);
+		var asteroidLimit = 30;
+		var aBodies = []
+		interval = setInterval(function() {
+			if(asteroidLimit < aBodies.length){
+				return;
+			}
+			var asteroidBase = new CANNON.Body({
+				mass : 5
+			});
+			asteroidBase.addShape(asteroidBaseShape);
+		
+			asteroidBase.position.set(6, 0, 0);
+			asteroidBase.velocity.set(0, 0, 8);
+			// asteroidBase.velocity.set(0,0,4);
+			asteroidBase.linearDamping = 0.0;
+			asteroidBase.preStep = gravityBasic
+			world.add(asteroidBase);
+			aBodies.add(asteroidBase);
+			demo.addVisual(asteroidBase, new THREE.MeshLambertMaterial({
+				color : 0xFFFF00
+			}));
+			
+			moon.addEventListener("collide", function(e) {
+				//if one of the bodies is part of the earth
+				//do an explanation and 
+				if(!contactHas(e,"earth")){
+					return;									
+				} 
+				aBodies.remove(contactGet(e,"asteroid"));
+				//send blurb (ie have another colored map, those colors map to explanations)
+				
+				
+			});	
+		}, 100);
+	
+		hDA = []
+	
+	}
+	
 }	
