@@ -60,7 +60,7 @@ demo.addScene("Moon", function() {
 	// world.broadphase = new CANNON.SAPBroadphase();
 	world.solver.iterations = 1;
 	world.allowSleep = true;
-	// world.allowSleep = false;
+	world.allowSleep = false;
 	runSimulation(demo);
 
 	pCount = 0;
@@ -73,15 +73,16 @@ demo.addScene("Moon", function() {
 			}
 			
 			var cD = pData[pCount];
-			var pShape = new CANNON.Sphere(0.2);
+			var pShape = new CANNON.Sphere(0.27);
 			var p = new CANNON.Body({
-				mass : 5
+				mass : 0,
+				shape :pShape
 			});
-			p.addShape(pShape);
-			p.preStep =gravityHeavy
+			//p.addShape(pShape);
+			//p.preStep =gravityHeavy
 			p.gameType = "earthPoint"		
 			p.position.set(cD[0], cD[1], cD[2]);
-			colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
+			var colorD = 0x010000 * cD[3][0]+0x000100 * cD[3][1]+0x000001 * cD[3][2]
 			p.linearDamping = 0.0;
 			world.add(p);
 			demo.addVisual(p, new THREE.MeshLambertMaterial({
@@ -95,7 +96,7 @@ demo.addScene("Moon", function() {
 
 	freqCount = 1
 	var intervFreq= setInterval(function() {
-	demo.settings.stepFrequency = freqCount * 6000
+	//demo.settings.stepFrequency = freqCount * 6000
 	freqCount++;
 	if(freqCount > 5000){
 		clearInterval(intervFreq);

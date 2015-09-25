@@ -11,6 +11,7 @@ function runSimulation(demo){
 	
 	freqCount = 1
 	var intervFreq= setInterval(function() {
+		return;
 		demo.settings.stepFrequency = freqCount * 60
 		freqCount++;
 		if(freqCount > 2){
@@ -313,7 +314,7 @@ function runSimulation(demo){
 		lightBase.velocity.set(0, 0, 8);
 		// lightBase.velocity.set(0,0,4);
 		lightBase.linearDamping = 0.0;
-		lightBase.preStep = gravityBasic
+		lightBase.preStep = gravity
 		world.add(lightBase);
 		demo.addVisual(lightBase, new THREE.MeshLambertMaterial({
 			color : 0xFFFF00
@@ -331,15 +332,6 @@ function runSimulation(demo){
 			moon.addShape(new CANNON.Particle());
 			// moon.addShape(lightShape);
 	
-			// moon.position.set(Math.random() * 30,Math.random() *
-			// 10-4,Math.random() * 10-4);
-			// moon.position.set(Math.random() * 30,Math.random() *
-			// 8-4,Math.random() * 8-4);
-			// moon.position.set(Math.random() * 30,Math.random() *
-			// 6-3,Math.random() * 6-3);
-			// moon.position.set(Math.random() *
-			// 15+lightBase.position.x,Math.random() *
-			// 6-3+lightBase.position.y,Math.random() * 4-2+lightBase.position.z);
 			moon.position.set(Math.random() + lightBase.position.x, Math.random()
 					+ lightBase.position.y, Math.random() + lightBase.position.z);
 			// moon.velocity.set(0,0,8);
@@ -358,7 +350,7 @@ function runSimulation(demo){
 			moon.position.negate(moon_to_planet);
 			var distance = moon_to_planet.norm();
 			moon_to_planet.normalize();
-			moon_to_planet.mult(80, moon.velocity);
+			moon_to_planet.mult(800, moon.velocity);
 	
 			if (bodies.length > 20) {
 				var b = bodies.shift();
@@ -395,51 +387,6 @@ function runSimulation(demo){
 	}
 	runWorld();
 	
-	function addAsteroids() {
-		world = demo.getWorld();
-		// world.broadphase = new CANNON.SAPBroadphase();
-		world.solver.iterations = 1;
-		world.allowSleep = true;
-		// world.allowSleep = false;
 	
-		var asteroidBaseShape = new CANNON.Sphere(0.1);
-		var asteroidLimit = 30;
-		var aBodies = []
-		interval = setInterval(function() {
-			if(asteroidLimit < aBodies.length){
-				return;
-			}
-			var asteroidBase = new CANNON.Body({
-				mass : 5
-			});
-			asteroidBase.addShape(asteroidBaseShape);
-		
-			asteroidBase.position.set(6, 0, 0);
-			asteroidBase.velocity.set(0, 0, 8);
-			// asteroidBase.velocity.set(0,0,4);
-			asteroidBase.linearDamping = 0.0;
-			asteroidBase.preStep = gravityBasic
-			world.add(asteroidBase);
-			aBodies.add(asteroidBase);
-			demo.addVisual(asteroidBase, new THREE.MeshLambertMaterial({
-				color : 0xFFFF00
-			}));
-			
-			moon.addEventListener("collide", function(e) {
-				//if one of the bodies is part of the earth
-				//do an explanation and 
-				if(!contactHas(e,"earth")){
-					return;									
-				} 
-				aBodies.remove(contactGet(e,"asteroid"));
-				//send blurb (ie have another colored map, those colors map to explanations)
-				
-				
-			});	
-		}, 100);
-	
-		hDA = []
-	
-	}
 	
 }	
