@@ -1,0 +1,145 @@
+< !DOCTYPE html >
+	<html>
+  <head>
+    <title>cannon.js - callbacks demo</title>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  </head>
+  <body>
+  
+    <script src="assets/cannon.js"></script>
+    <script src="assets/cannon.demo.js"></script>
+    <script src="assets/dat.gui.js"></script>
+    <script src="assets/Three.js"></script>
+    <script src="assets/TrackballControls.js"></script>
+    <script src="assets/Detector.js"></script>
+    <script src="assets/Stats.js"></script>
+    <script src="assets/smoothie.js"></script>
+    <script src="test4.js"></script>
+    <script src="assets/Chart.js"></script>
+  <canvas id="earthCanvas"></canvas>
+  	
+	
+    <script>
+    	function runEarth(height, width){    
+    var pData = []
+    radius = 3
+	for(var c = 0; c < intermediate.length; c++){
+        var a = intermediate[c][0];
+        var b = intermediate[c][1];
+        var colors = intermediate[c][2];
+        
+		;
+        
+        theta =  a * Math.PI * 2 /width
+        phi =  b*Math.PI /height
+        
+        
+		//x = Math.cos(a) * Math.cos(b) * radius;
+		//y = Math.cos(a) * Math.sin(b) * radius;
+		//z = Math.sin(a) * radius;
+		if(colors[0] < 15&&colors[0] < 15&&colors[2] > 40){
+		  radius =3.4	
+		} else {
+			radius = 3;
+		}
+		x = Math.cos(theta) * Math.sin(phi) * radius;
+		y = Math.sin(theta) * Math.sin(phi) * radius;
+		z = Math.cos(phi) * radius;
+		
+		
+		pData.push([x,y,-z,colors])
+	}  
+	
+	
+
+  function addShapeFinalize(p,x,y,z,color){
+			p.gameType = "earthPoint"		
+			p.position.set(x,y,z);
+			var colorD = 0x010000 * color[0]+0x000100 * color[1]+0x000001 * color[2]
+			p.linearDamping = .8;
+			world.add(p);
+			demo.addVisual(p, new THREE.MeshLambertMaterial({
+				color : colorD
+			}));
+  }
+	var landCount = 0;
+	var oceanCount = 0;
+	var landShape = new CANNON.Sphere(0.24);
+	var oceanShape = new CANNON.Sphere(0.225);
+	var interval = setInterval(function() {
+		for(var a = 0; a < 5; a++){
+		
+			if(oceanCount >= pData.length){
+				clearInterval(interval)
+				return;					
+			}
+			
+			var cD = pData[oceanCount];
+			oceanCount++;
+			
+			var ocean = cD[3][0] < 15&&cD[3][0] < 15&&cD[3][2] > 40;
+			if(!ocean)
+				return;
+				//ocean
+				var p = new CANNON.Body({
+					mass : 50,
+					shape :oceanShape,
+					collisionFilterGroup:  1
+				});
+				p.preStep =gravity
+			
+			addShapeFinalize(p,cD[0],cD[1],cD[2],cD[3]);
+		}
+	
+	}, 1);
+	
+	var lInterval = setInterval(function() {
+		for(var a = 0; a < 100; a++){
+			if(landCount >= pData.length){
+				clearInterval(lInterval)
+				return;					
+			}
+			
+			var cD = pData[landCount];
+			landCount++;
+			var ocean = cD[3][0] < 15&&cD[3][0] < 15&&cD[3][2] > 40;
+			if(ocean)
+				return;
+			
+			
+			
+			var p = new CANNON.Body({
+					mass : 0,
+					shape :landShape,
+					collisionFilterGroup:  1
+				});
+			
+			addShapeFinalize(p,cD[0],cD[1],cD[2],cD[3]);
+		}
+	}, 0);
+
+	
+
+}	
+	
+	
+	
+	
+
+  
+    	//
+    	
+		//group by Y axis
+		//make sun rotate around x axis (if it doesn't)
+		//show Y axis correlation
+
+
+    </script>
+	
+	<script src="loadingImage.js"></script>
+
+
+  </body>
+</html>

@@ -1,3 +1,9 @@
+1 make sun pass through atmosphere
+2 shrink atmosphere dramatically (due to other stuff being static)
+3 for a given range of blue reset the mass
+
+
+
 1 take simulation logic
 2 add in the heat distribution
 3 add in the sun
