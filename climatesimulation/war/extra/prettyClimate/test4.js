@@ -17,38 +17,30 @@ var intervFreq= setInterval(function() {
 	}
 }, 100)
 
-setInterval(function() {
-	distributeHeat = true;
-	for(idx in basicBodies){
-
-//		basicBodies[idx].addEventListener("collide", function(e) {
-//			if(!distributeHeat)
-//				return;
-//			var b1=e.contact.bi;
-//			var b2 = e.contact.bj;
-//			if(b1 === undefined||b2 === undefined||b1.cli === undefined || b2.cli === undefined)
-//				return;
-//			
-//			
-//			var newHeat = (b1.cli.heat + b2.cli.heat) * .5
-//			b1.cli.heat = newHeat;
-//			b2.cli.heat = newHeat;
-//			
-//			var vis = demo.getVisual(b1);
-//			var vis2 = demo.getVisual(b2);
-//			
-//			if(showHeat){
-//				var colorFilter = 0x030000;
-//				vis.material.color.setHex(0x110000+Math.floor(b1.heat)*colorFilter)	
-//				vis2.material.color.setHex(0x110000+Math.floor(b2.heat)*colorFilter)	
-//
-//			}
-//			
-//
-//		});
+function distributeHeatF(e) {
+	
+	var b1=e.contact.bi;
+	var b2 = e.contact.bj;
+	if(!b1||!b2||!b1.cli||!b2.cli||b1.cli.heat === undefined||b2.cli.heat === undefined)
+		return;
+	
+	
+	var newHeat = (b1.cli.heat + b2.cli.heat) * .5
+	b1.cli.heat = newHeat;
+	b2.cli.heat = newHeat;
+	
+	var vis = demo.getVisual(b1);
+	var vis2 = demo.getVisual(b2);
+	
+	if(showHeat){
+		var colorFilter = 0x030000;
+		vis.material.color.setHex(0x110000+Math.floor(newHeat)*colorFilter)	
+		vis2.material.color.setHex(0x110000+Math.floor(newHeat)*colorFilter)	
 
 	}
-}, 30000)
+	
+
+}
 
 
 var useLight = true;
@@ -57,9 +49,9 @@ var distributeheat = false
 mPerLight = 90
 lightMass = .00001
 
-randomAllOver = function(shape) {
-	currentBody.position.set(Math.random() * shape * 2 - shape, Math.random() * shape * 2 - shape, Math
-			.random() * shape * 2 - shape);
+randomAllOver = function(par,body) {
+	currentBody.position.set(Math.random() * par * 2 - par, Math.random() * par * 2 - par, Math
+			.random() * par * 2 - par);
 }
 randomPoles = function(shape) {
 	currentBody.position.set(Math.random() * shape * 2 - shape, Math.random()> .5? 5: -5, Math
@@ -153,7 +145,9 @@ function useType(args) {
 		obj.collisionFilterGroup=args.collisionFilterGroup;
 	if(args.collisionFilterMask)
 		obj.collisionFilterMask=args.collisionFilterMask;
-		
+	if(args.cli)
+		obj.cli = args.cli;
+	
 	basicBodies.push(obj);
 		
 	
@@ -191,7 +185,7 @@ layerRun = function(args, amount) {
 	}
 	amount++;
 	useType(types[args.type])
-	args.random.apply(this,args.params)
+	args.random(this.currentBody,args.params)
 	if (amount < args.amount)
 		setTimeout(this.layerRun.bind(this, args, amount), args.timeBetween)
 
@@ -205,7 +199,7 @@ function useLayer() {
 }
 
 var atmosphereShape = new CANNON.Sphere(.4);
-var atmosphereLargeShape = new CANNON.Sphere(1.6);
+var atmosphereLargeShape = new CANNON.Particle(1.6);
 var smallShape = new CANNON.Sphere(0.2);
 var smallerShape = new CANNON.Sphere(0.15);
 var lightShape = new CANNON.Sphere(0.05);
@@ -275,6 +269,9 @@ addType("atmosphereLarge", {
 	"sleepTimeLimit" : 1,
 	"collisionFilterGroup":  16,
 	"collisionFilterMask":  1|16,
+	"cli" : {
+		"heat" : 1
+	}
 	
 })
 
@@ -303,7 +300,7 @@ addLayer({
 	"type" : "atmosphereLarge",
 	"start" : 6000,
 	"timeBetween" : 30,
-	"amount" : 30,
+	"amount" : 30,//90
 	"random" : randomAllOver,
 	"params" : [14]
 })
@@ -333,8 +330,8 @@ demo.addScene("Moon", function() {
 	});
 	lightBase.addShape(lightBaseShape);
 
-	lightBase.position.set(6, 0, 0);
-	lightBase.velocity.set(0, 0, 8);
+	lightBase.position.set(0, 6, 0);
+	lightBase.velocity.set(8, 0, 0);
 	// lightBase.velocity.set(0,0,4);
 	lightBase.linearDamping = 0.0;
 	lightBase.preStep = gravityBasic
@@ -382,7 +379,7 @@ demo.addScene("Moon", function() {
 		moon.position.negate(moon_to_planet);
 		var distance = moon_to_planet.norm();
 		moon_to_planet.normalize();
-		moon_to_planet.mult(80, moon.velocity);
+		moon_to_planet.mult(20, moon.velocity);
 
 		if (bodies.length > 20) {
 			var b = bodies.shift();
@@ -398,8 +395,12 @@ demo.addScene("Moon", function() {
 					body = e.contact.bi
 				else
 					body = e.body
-				toRemove.push(this);
-				body.heat += 20
+				
+				if(body.cli&&body.cli.heat){
+					toRemove.push(this);
+					body.cli.heat += 20
+				}
+					
 				// updateHeat(body);
 			}
 
@@ -414,8 +415,191 @@ demo.addScene("Moon", function() {
 
 	}, mPerLight);
 
+
+	var intervalE = setInterval(function() {
+		var bCur = new CANNON.Body({
+			mass : .001
+		});
+		bCur.addShape(new CANNON.Particle());
+		randomAllOver(5,bCur);
+		world.add(bCur);
+
+		demo.addVisual(bCur, new THREE.MeshLambertMaterial({
+			color : 0x00ff00
+		}));
+		bodies.push(bCur)
+
+		var moon_to_planet = new CANNON.Vec3();
+		bCur.position.negate(moon_to_planet);
+		var distance = moon_to_planet.norm();
+		moon_to_planet.normalize();
+		moon_to_planet.mult(20, moon.velocity);
+
+		if (bodies.length > 20) {
+			var b = bodies.shift();
+			demo.removeVisual(b);
+			world.remove(b);
+		}
+
+		bCur.addEventListener("collide", function(e) {
+            var emiss = $("emissionsAmount").val()
+			if (Math.random() < emiss) {
+				var body
+				if (e.contact.bi.cli.heat)
+					body = e.contact.bi
+				else
+					body = e.body
+				
+				if(body.cli&&body.cli.heat){
+					toRemove.push(this);
+					body.cli.heat -=10
+				}
+					
+				// updateHeat(body);
+			}
+
+		});
+		for (b in toRemove) {
+			var pos = toRemove[b].position;
+			demo.removeVisual(toRemove[b]);
+			world.remove(toRemove[b]);
+
+		}
+		toRemove.length = 0;
+
+	}, 100);
+
+
 	hDA = []
+	
+	
+	demo.dataFolder.domElement.innerHTML = "<span id=showClimateData></span><input type=text id=emissionsAmount>"
 
 });
 
 demo.start();
+
+var oceanBodies = [];
+var oceanMeshes = [];
+function runEarth(height, width) {
+		var pData = []
+		radius = 3
+		for (var c = 0; c < intermediate.length; c++) {
+			var a = intermediate[c][0];
+			var b = intermediate[c][1];
+			var colors = intermediate[c][2];
+
+			;
+
+			theta = a * Math.PI * 2 / width
+			phi = b * Math.PI / height
+
+
+			//x = Math.cos(a) * Math.cos(b) * radius;
+			//y = Math.cos(a) * Math.sin(b) * radius;
+			//z = Math.sin(a) * radius;
+			if (colors[0] < 15 && colors[0] < 15 && colors[2] > 40) {
+				radius = 3.4
+			}
+			else {
+				radius = 3;
+			}
+			x = Math.cos(theta) * Math.sin(phi) * radius;
+			y = Math.sin(theta) * Math.sin(phi) * radius;
+			z = Math.cos(phi) * radius;
+
+
+			pData.push([x, y, z, colors])
+		}
+
+
+
+		function addShapeFinalize(p, x, y, z, color) {
+			p.gameType = "earthPoint"
+			p.position.set(x, y, z);
+			var colorD = 0x010000 * color[0] + 0x000100 * color[1] + 0x000001 * color[2]
+			p.linearDamping = .8;
+			world.add(p);
+			demo.addVisual(p, new THREE.MeshLambertMaterial({
+				color: colorD
+			}));
+
+
+		}
+
+
+		var landCount = 0;
+		var oceanCount = 0;
+		var landShape = new CANNON.Sphere(0.24);
+		var oceanShape = new CANNON.Sphere(0.225);
+		
+		var interval = setInterval(function() {
+			for (var a = 0; a < 5; a++) {
+
+				if (oceanCount >= pData.length) {
+					clearInterval(interval)
+					return;
+				}
+
+				var cD = pData[oceanCount];
+				oceanCount++;
+				//wierd
+				if (oceanCount < 30)
+					continue;
+
+				var ocean = cD[3][0] < 15 && cD[3][0] < 15 && cD[3][2] > 40;
+				if (!ocean)
+					return;
+				//ocean
+				var p = new CANNON.Body({
+					mass: 50,
+					shape: oceanShape,
+					collisionFilterGroup: 1,
+					collisionFilterMask: 1 | 16
+				});
+				p.preStep = gravity
+
+				addShapeFinalize(p, cD[0], cD[1], cD[2], cD[3]);
+				oceanBodies.push(p);
+				oceanMeshes.push(demo.getVisual(p));
+				p.cli = {}
+				p.cli.heat = 1;
+			}
+
+		}, 20);
+
+		var lInterval = setInterval(function() {
+			for (var a = 0; a < 100; a++) {
+				if (landCount >= pData.length) {
+					clearInterval(lInterval)
+					return;
+				}
+
+				var cD = pData[landCount];
+				landCount++;
+				var ocean = cD[3][0] < 15 && cD[3][0] < 15 && cD[3][2] > 40;
+				if (ocean)
+					return;
+
+
+
+				var p = new CANNON.Body({
+					mass: 0,
+					shape: landShape,
+					collisionFilterGroup: 1,
+					collisionFilterMask: 1 | 16
+				});
+
+				addShapeFinalize(p, cD[0], cD[1], cD[2], cD[3]);
+			}
+		}, 0);
+
+		setInterval(function() {
+			for (var idx in oceanBodies) {
+
+				oceanBodies[idx].addEventListener("collide", distributeHeatF);
+				
+			}
+		}, 1000)
+
+	}

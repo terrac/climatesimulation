@@ -258,7 +258,7 @@ CANNON.Demo = function(options){
     }
 
 
-    var camera, controls, renderer;
+    var camera, controls, renderer, dataFolder;
     
     function updateVisuals(){
         var N = bodies.length;
@@ -446,6 +446,9 @@ CANNON.Demo = function(options){
     init();
     this.camera = camera
     this.controls = controls
+    this.renderer = renderer
+    this.scene = scene
+    this.dataFolder = dataFolder
     animate();
 
     function init() {
@@ -456,12 +459,17 @@ CANNON.Demo = function(options){
         // Camera
         camera = new THREE.PerspectiveCamera( 24, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
     
-        camera.up.setY(-1);
-        camera.position.set(10.411551838176683,-5.638686845308936,28.014367724107206)
+        camera.up.set(-0.20186131130688936, -0.004067350061347764, 0.9947902944451711)
+        camera.position.set(-30.205136143628856,10.9773710513971587,2.9455107728155066)
+        
+        
+        
+        
+        
         //camera.rotation.order = 'ZYX';
         //camera.rotation.x += 90;
         //camera.rotation.z += 90;
-        //camera.position.set(30,5,0);
+        camera.position.set(30,5,0);
 
         // SCENE
         scene = that.scene = new THREE.Scene();
@@ -683,9 +691,12 @@ CANNON.Demo = function(options){
 
             // Scene picker
             sceneFolder = gui.addFolder('Scenes');
-            sceneFolder.open();
+            //sceneFolder.open();
         }
 
+        dataFolder = gui.addFolder('World Data');
+        dataFolder.open();
+        
         // Trackball controls
         camera.rotation.set(0.1986244771120146,0.34939530486316994,-3.0636387486223113)
         controls = new THREE.TrackballControls( camera, renderer.domElement );

@@ -1,6 +1,48 @@
-1 make sun pass through atmosphere
-2 shrink atmosphere dramatically (due to other stuff being static)
-3 for a given range of blue reset the mass
+1 emissions are a never ending 
+
+
+2 allow a box that lets you alter emission levels 
+  a a simple text box that says current emission levels
+  b emissions are like before, things that get created, fly towards earth and then fly away taking some heat
+  c add back in atmosphere
+  d convert to realistic units (make emissions more complicated, change indivual things)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+3 show overall temperature increase based on emission levels
+4 write out an object that could be used to 3d print a spherical earth
+
+
+
+
+1 click on an individual spot to see average temperature increase based on emissions
+  a clicking + box that shows cli (look for an example)
+  b more later
+  
+  
+
+1 add counters to test and display statistics
+
+1 add reddish hue based on heat 
+  a save initial color
+  b add x amount of red based on heat
+  c collisions transfer heat
+2 show reports  
+
+
+#1 make sun pass through atmosphere
+#2 shrink atmosphere dramatically (due to other stuff being static)
+#3 for a given range of blue reset the mass
 
 
 
