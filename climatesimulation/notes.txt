@@ -1,3 +1,21 @@
+1 emissions to carbon amounts
+
+
+
+
+#1 atmospheric movement option - increasing basically randomly makes an atmosphere move slightly more often
+#2 ocean movement - same for ocean
+#3 heat to real temperature (a simple multiplication that can be filled in)
+
+4 description
+
+
+1 heat to realistic temps
+2 a description
+3 don't start with heat on
+4 a video to one many hours old
+
+
 1 emissions are a never ending 
 
 

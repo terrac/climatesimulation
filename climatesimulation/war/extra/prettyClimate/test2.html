@@ -8,6 +8,27 @@
 </head>
 
 <body>
+	
+	<div id=cliUI>
+		<pre id=showClimateData> 
+		</pre>
+		<br>Milliseconds per emission<input type=text id=emissionsAmount value=500>
+		<br>Farenheight ratio<input type=text id=farenheightRatio value=.7>
+		<!--<br>Milliseconds per Atmospheric Turbulence<input type=text id=atmosphereTurbulenceAmount value=1000>-->
+		<!--<br>Milliseconds per Ocean Turbulence<input type=text id=oceanTurbulenceAmount value=1000>-->
+		<br><input type=button id=showEmissionsB value=dontshowemissions>
+		<br><input type=button id=showHeatB value=dontshowheat>
+		<br>Emissions: <span id=emissionsPerSec></span>
+		<br>Estimated carbon amount: <span id=carbonAmount></span>ppm
+		<br>Estimated average temperature: <span id=avgTemp></span> °F
+		<br>Console:
+		
+		<br>Description: This is a climate simulation that allows you to see how the heat could distribute given increased carbon levels in the atmosphere. Increasing the milliseconds per emission
+		is the approximation of adding more carbon in the atmosphere.  
+		
+		<br>The central idea I had when making this is that the parts of the earth that are hot should increase very unevenly given a reduction in emissions.  The physics simulation shows that.
+		<br><span id=cliConsole height="5em"></span>
+	</div>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="assets/cannon.js"></script>
 	<script src="assets/cannon.demo.js">
@@ -39,8 +60,6 @@
 	<script src="loadingImage.js">
 	
 	</script>
-	
-
 
 </body>
 <script src="mouseClick.js">

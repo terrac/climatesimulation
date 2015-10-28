@@ -28,6 +28,7 @@ var myCanvas = document.getElementById('earthCanvas');
 			intermediate.push([a,b,[pixelData[0],pixelData[1],pixelData[2]]])
 			
 		}
+		$("#earthCanvas").remove()
 	}
 	//call copy(intermediate) in console and then paste into file  	
 	console.log(intermediate)

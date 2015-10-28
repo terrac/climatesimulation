@@ -224,7 +224,7 @@ CANNON.Demo = function(options){
         scenePicker[title] = function(){
             changeScene(idx);
         };
-        sceneFolder.add(scenePicker,title);
+        //sceneFolder.add(scenePicker,title); //demoUI
         
     }
 
@@ -596,11 +596,13 @@ CANNON.Demo = function(options){
         stats.domElement.style.top = '0px';
         stats.domElement.style.zIndex = 100;
         container.appendChild( stats.domElement );
-
-        if(window.dat!=undefined){
-            gui = new dat.GUI();
-
-            gui.domElement.parentNode.style.zIndex=120;
+        
+        
+        gui = new dat.GUI();
+        gui.domElement.parentNode.style.zIndex=120;
+        
+        if(window.dat!=undefined&&false){//demoUI
+            
 
             // Render mode
             var rf = gui.addFolder('Rendering');
@@ -961,7 +963,7 @@ CANNON.Demo.prototype.addVisual = function(body,material){
         //mesh.useQuaternion = true;
         this.scene.add(mesh);
     }
-    body.originalMaterial = material
+    body.originalColor = jQuery.extend({}, material.color);
 };
 
 CANNON.Demo.prototype.removePartialVisuals = function(pct){
