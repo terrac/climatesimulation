@@ -10,7 +10,7 @@ var myCanvas = document.getElementById('earthCanvas');
 	  myCanvas.width = img.width;
 	  ctx.drawImage(img,0,0); // Or at whatever offset you like
 	  radius = 10;	  
-	  for(b = 0; b < myCanvas.height; b+=30){
+	  for(b = 0; b < myCanvas.height; b+=hInc){
 		var widthIncrement = Math.cos(2 * Math.PI *b/myCanvas.height) * 20;
 		if(b < 70){
 			//widthIncrement *= Math.abs(myCanvas.height/2 - b)* .03

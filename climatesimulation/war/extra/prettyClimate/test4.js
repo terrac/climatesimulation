@@ -1,6 +1,13 @@
 //world.broadphase = new CANNON.SAPBroadphase();
 //world.broadphase = new CANNON.GridBroadphase();
-
+var currentURI = URI(location);
+function urlOverride(param,defaultVal){
+	var val=currentURI.query(true)[param]
+	if(val) return val;
+	return defaultVal;
+}
+var lSize = urlOverride("lSize",.24)
+var hInc = urlOverride("hInc",30)
 
 function logEvent(message){
 	$("#cliConsole").append("<span>"+message+"<br></span>")	
@@ -562,7 +569,7 @@ function runEarth(height, width) {
 
 	var landCount = 0;
 	var oceanCount = 0;
-	var landShape = new CANNON.Sphere(0.24);
+	var landShape = new CANNON.Sphere(lSize);
 	var oceanShape = new CANNON.Sphere(0.225);
 
 	var interval = setInterval(function() {
