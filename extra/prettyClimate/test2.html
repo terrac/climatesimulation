@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<head>
+	<title>cannon.js - callbacks demo</title>
+	<meta charset="utf-8">
+
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+
+<body>
+	
+	<div id=cliUI>
+		<pre id=showClimateData> 
+		</pre>
+		<br>Milliseconds per emission<input type=text id=emissionsAmount value=500>
+		<br>Farenheight ratio<input type=text id=farenheightRatio value=.7>
+		<!--<br>Milliseconds per Atmospheric Turbulence<input type=text id=atmosphereTurbulenceAmount value=1000>-->
+		<!--<br>Milliseconds per Ocean Turbulence<input type=text id=oceanTurbulenceAmount value=1000>-->
+		<br><input type=button id=showEmissionsB value=dontshowemissions>
+		<br><input type=button id=showHeatB value=dontshowheat>
+		<br>Emissions: <span id=emissionsPerSec></span>
+		<br>Estimated carbon amount: <span id=carbonAmount></span>ppm
+		<br>Estimated average temperature: <span id=avgTemp></span> °F
+		<br>Console:
+		
+		<br>Description: This is a climate simulation that allows you to see how the heat could distribute given increased carbon levels in the atmosphere. Increasing the milliseconds per emission
+		is the approximation of adding more carbon in the atmosphere.  
+		
+		<br>The central idea I had when making this is that the parts of the earth that are hot should increase very unevenly given a reduction in emissions.  The physics simulation shows that.
+		<br><span id=cliConsole height="5em"></span>
+	</div>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="assets/URI.js"></script>
+  
+	<script src="assets/cannon.js"></script>
+	<script src="assets/cannon.demo.js">
+	</script>
+	<script src="assets/dat.gui.js">
+	</script>
+	<script src="assets/Three.js">
+	</script>
+	
+	
+	<script src="assets/TrackballControls.js">
+	</script>
+	<script src="assets/Detector.js">
+	</script>
+	<script src="assets/Stats.js">
+	</script>
+	<script src="assets/smoothie.js">
+	</script>
+	<script src="test4.js">
+	</script>
+	<script src="assets/Chart.js">
+	</script>
+	<canvas id="earthCanvas">
+	</canvas>
+
+
+
+
+	<script src="loadingImage.js">
+	
+	</script>
+
+</body>
+<script src="mouseClick.js">
+	</script>
+</html>
